@@ -1,5 +1,5 @@
 package edu.ufl.cise.plcsp23;
-public class IScanner {
+public interface IScanner {
     /*
      * Return an IToken and advance the internal position so that
      * subsequent calls will return subsequent ITokens.

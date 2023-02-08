@@ -1,4 +1,4 @@
 package edu.ufl.cise.plcsp23;
-public class INumLitToken {
-    String getValue();
+public interface INumLitToken extends IToken{
+    int getValue();
 }

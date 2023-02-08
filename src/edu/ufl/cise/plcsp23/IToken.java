@@ -1,5 +1,5 @@
 package edu.ufl.cise.plcsp23;
-public class IToken {
+public interface IToken {
     /* Represents the location in the source code */
     public record SourceLocation(int line, int column){}
 
@@ -62,21 +62,21 @@ public class IToken {
         DIV, // /
         MOD, // %
         EOF,
-        ERROR
+        ERROR   //may be useful
     }
 
-    /* Returns a SourceLocation record containing the line and column of this token
-    * Both counts start numbering at 1
-    *
-    * @return Line number and column of this token */
+
+    // Returns a location to the source record containing the line and column of this token
+    // Both counts start numbering at 1
+    // Return line number and column of this token
     public SourceLocation getSourceLocation();
 
-     /* Returns the kind of this Token
-     *
-     * @return kind */
+
+    //Contains the kind of the token, returns kind
     public Kind getKind();
 
-    /* Returns a char array containing the characters of this token
-    * @return */
+    // Contains reference to input array. Returns a char array containing characters of the token
     public String getTokenString();
+
+    public String toString();
 }

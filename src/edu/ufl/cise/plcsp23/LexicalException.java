@@ -1,8 +1,17 @@
 package edu.ufl.cise.plcsp23;
-@SuppressWarnings("serial")
-public class LexicalException {
+import edu.ufl.cise.plcsp23.IToken.SourceLocation;
 
+@SuppressWarnings("serial")
+public class LexicalException extends PLCException {
     public LexicalException(String message) {
         super(message);
+    }
+
+    public LexicalException(Throwable cause) {
+        super(cause);
+    }
+
+    public LexicalException(String error_message, int line, int column) {
+        super(line + ":" + column + "  " + error_message);
     }
 }

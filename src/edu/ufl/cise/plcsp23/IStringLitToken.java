@@ -1,4 +1,4 @@
 package edu.ufl.cise.plcsp23;
-public class IStringLitToken {
+public interface IStringLitToken extends IToken {
     String getValue();
 }
