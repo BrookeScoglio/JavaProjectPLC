@@ -71,7 +71,6 @@ public interface IToken {
     // Return line number and column of this token
     public SourceLocation getSourceLocation();
 
-
     //Contains the kind of the token, returns kind
     public Kind getKind();
 
@@ -79,4 +78,6 @@ public interface IToken {
     public String getTokenString();
 
     public String toString();
+
+    // EOF IToken.Java
 }

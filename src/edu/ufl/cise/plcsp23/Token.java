@@ -6,21 +6,25 @@ public class Token implements IToken {
     final IToken.Kind kind; //type
     final int pos;
     final int length;
+    final int line;
+    final int col;
     final char[] source; //text of the token
 
     public record SourceLocation(int line, int column){}
 
-    public Token(IToken.Kind kind, int pos, int length, char[] source){
+    public Token(IToken.Kind kind, int pos, int length, int line, int column, char[] source){
         super();
         this.kind = kind;
         this.pos = pos;
         this.length = length;
         this.source = source;
+        this.line = line;
+        this.col = column - length;
     }
 
     @Override
     public IToken.SourceLocation getSourceLocation() {
-        return null;
+        return new IToken.SourceLocation(line, col);
     }
 
     @Override
@@ -30,11 +34,12 @@ public class Token implements IToken {
 
     @Override
     public String getTokenString() {
-        return null;
+        return new String(source, pos, length);
     }
     @Override
     public String toString(){
-        return null;
+        return kind + "=" + getTokenString() + " located at" + pos + "," + length;
     }
 
+    // EOF Token.Java
 }

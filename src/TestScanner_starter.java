@@ -89,11 +89,13 @@ class TestScanner_starter {
 	}
 
 	// check that this token is the EOF token
+	// PASSES
 	void checkEOF(IToken t) {
 		checkToken(Kind.EOF, t);
 	}
 
 
+	// PASSES
 	@Test
 	void emptyProg() throws LexicalException {
 		String input = "";
