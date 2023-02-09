@@ -5,6 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="7bf999a8-41a8-46be-9c36-198738bd9545" name="Changes" comment="EmptyProg Works!!!">
+      <change afterPath="$PROJECT_DIR$/src/edu/ufl/cise/plcsp23/NumLitToken.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/edu/ufl/cise/plcsp23/StringLitToken.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -20,6 +22,7 @@
     </option>
   </component>
   <component name="Git.Settings">
+    <option name="PUSH_AUTO_UPDATE" value="true" />
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
     <option name="SET_USER_NAME_GLOBALLY" value="false" />
   </component>
@@ -43,7 +46,7 @@
     &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/brook/IdeaProjects/JavaProjectPLC/src&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/brook/Downloads&quot;,
     &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
     &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
     &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;
@@ -57,7 +60,7 @@
       <recent name="C:\Users\brook\IdeaProjects\JavaProjectPLC\src" />
     </key>
   </component>
-  <component name="RunManager" selected="JUnit.TestScanner_starter.emptyProg">
+  <component name="RunManager" selected="JUnit.TestScanner_starter.onlyWhiteSpace">
     <configuration name="TestScanner_starter" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="JavaProjectPLC" />
       <option name="PACKAGE_NAME" value="" />
@@ -99,9 +102,9 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="JUnit.TestScanner_starter.onlyWhiteSpace" />
         <item itemvalue="JUnit.TestScanner_starter.emptyProg" />
         <item itemvalue="JUnit.TestScanner_starter" />
-        <item itemvalue="JUnit.TestScanner_starter.onlyWhiteSpace" />
         <item itemvalue="JUnit.TestScanner_starter.numLits1" />
       </list>
     </recent_temporary>
@@ -129,8 +132,26 @@
       <option name="project" value="LOCAL" />
       <updated>1675885302040</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="EmptyProg Works!!!">
+      <created>1675885697908</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1675885697908</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="FIRST COMMIT" />
