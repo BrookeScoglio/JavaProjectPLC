@@ -358,7 +358,16 @@ public class Scanner implements IScanner {
                 }
                 case IN_STRING_LIT -> {
                 }
-                case IN_NUM_LIT -> {
+                case IN_NUM_LIT ->{
+                    length = 0;
+                    while (isDigit(ch) == true){
+                            length++;
+                            nextChar();
+                        }
+                        state = state.START;
+                            return new NumLitToken(IToken.Kind.NUM_LIT, tokenStart, length , line, column, inputChars);
+
+                    }
                 }
                 default -> {
                     throw new UnsupportedOperationException("Bug in the Scanner");
