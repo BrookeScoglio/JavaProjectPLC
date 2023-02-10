@@ -364,6 +364,7 @@ public class Scanner implements IScanner {
                             length++;
                             nextChar();
                         }
+                    //check commit changes
                         state = state.START;
                             return new NumLitToken(IToken.Kind.NUM_LIT, tokenStart, length , line, column, inputChars);
 
