@@ -364,6 +364,10 @@ public class Scanner implements IScanner {
                             length++;
                             nextChar();
                         }
+                    // throws the lexical exception for the numLitTooBig (maybe later use .getValue and actaully find if the value is too big..?)
+                        if (length > 20 )
+                        error("Error");
+                    }
                     //check commit changes
                         state = state.START;
                             return new NumLitToken(IToken.Kind.NUM_LIT, tokenStart, length , line, column, inputChars);
