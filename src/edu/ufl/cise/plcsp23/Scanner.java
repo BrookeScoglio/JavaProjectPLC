@@ -14,6 +14,7 @@ public class Scanner implements IScanner {
     char ch; // next char
     int line;
     int column;
+    int length;
     // invariant ch == inputChars[pos]
     boolean chIs0; // the boolean for the while (true) in scantoken
 
