@@ -258,8 +258,7 @@ public class Scanner implements IScanner {
 
                         //num literals
                         case '1', '2', '3', '4', '5', '6', '7', '8', '9' -> {   //nonzero digit
-                            state = State.IN_NUM_LIT;
-                            nextChar();
+                            state = State.IN_NUM_LIT;             
                         }
 
                         //idents or reserved words
