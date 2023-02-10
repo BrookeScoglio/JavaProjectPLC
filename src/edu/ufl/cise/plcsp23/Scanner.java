@@ -24,12 +24,7 @@ public class Scanner implements IScanner {
         IN_STRING_LIT,
         IN_NUM_LIT,
         IN_COMMENT,
-        HAVE_EQUAL,
-        HAVE_LT,
-        HAVE_AND,
-        HAVE_OR,
-        HAVE_EXP,
-        HAVE_GT
+ 
     }
 
     // Store reserved words in a hash map for easy lookup, Maps the string to the token kind
