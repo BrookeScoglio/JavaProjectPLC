@@ -6,9 +6,8 @@
   <component name="ChangeListManager">
     <list default="true" id="7bf999a8-41a8-46be-9c36-198738bd9545" name="Changes" comment="Altered Scanner and Token files, and added the StringLitToken file.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/edu/ufl/cise/plcsp23/NumLitToken.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/edu/ufl/cise/plcsp23/NumLitToken.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/TestScanner_starter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/TestScanner_starter.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/edu/ufl/cise/plcsp23/Scanner.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/edu/ufl/cise/plcsp23/Scanner.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/edu/ufl/cise/plcsp23/StringLitToken.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/edu/ufl/cise/plcsp23/StringLitToken.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -61,21 +60,42 @@
       <recent name="C:\Users\brook\IdeaProjects\JavaProjectPLC\src" />
     </key>
   </component>
-  <component name="RunManager" selected="JUnit.TestScanner_starter.identsAndReserved">
-    <configuration name="TestScanner_starter" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+  <component name="RunManager" selected="JUnit.TestScanner_starter.eqWithError">
+    <configuration name="TestScanner_starter.allOperatorsAndSeparators" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="JavaProjectPLC" />
       <option name="PACKAGE_NAME" value="" />
       <option name="MAIN_CLASS_NAME" value="TestScanner_starter" />
-      <option name="TEST_OBJECT" value="class" />
+      <option name="METHOD_NAME" value="allOperatorsAndSeparators" />
+      <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="TestScanner_starter.emptyProg" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="TestScanner_starter.allReservedWords" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="JavaProjectPLC" />
       <option name="PACKAGE_NAME" value="" />
       <option name="MAIN_CLASS_NAME" value="TestScanner_starter" />
-      <option name="METHOD_NAME" value="emptyProg" />
+      <option name="METHOD_NAME" value="allReservedWords" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="TestScanner_starter.eqWithError" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="JavaProjectPLC" />
+      <option name="PACKAGE_NAME" value="" />
+      <option name="MAIN_CLASS_NAME" value="TestScanner_starter" />
+      <option name="METHOD_NAME" value="eqWithError" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="TestScanner_starter.equals" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="JavaProjectPLC" />
+      <option name="PACKAGE_NAME" value="" />
+      <option name="MAIN_CLASS_NAME" value="TestScanner_starter" />
+      <option name="METHOD_NAME" value="equals" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -91,33 +111,13 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="TestScanner_starter.numLits1" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="JavaProjectPLC" />
-      <option name="PACKAGE_NAME" value="" />
-      <option name="MAIN_CLASS_NAME" value="TestScanner_starter" />
-      <option name="METHOD_NAME" value="numLits1" />
-      <option name="TEST_OBJECT" value="method" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="TestScanner_starter.onlyWhiteSpace" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="JavaProjectPLC" />
-      <option name="PACKAGE_NAME" value="" />
-      <option name="MAIN_CLASS_NAME" value="TestScanner_starter" />
-      <option name="METHOD_NAME" value="onlyWhiteSpace" />
-      <option name="TEST_OBJECT" value="method" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="JUnit.TestScanner_starter.eqWithError" />
+        <item itemvalue="JUnit.TestScanner_starter.equals" />
         <item itemvalue="JUnit.TestScanner_starter.identsAndReserved" />
-        <item itemvalue="JUnit.TestScanner_starter.emptyProg" />
-        <item itemvalue="JUnit.TestScanner_starter.onlyWhiteSpace" />
-        <item itemvalue="JUnit.TestScanner_starter" />
-        <item itemvalue="JUnit.TestScanner_starter.numLits1" />
+        <item itemvalue="JUnit.TestScanner_starter.allReservedWords" />
+        <item itemvalue="JUnit.TestScanner_starter.allOperatorsAndSeparators" />
       </list>
     </recent_temporary>
   </component>
@@ -165,7 +165,14 @@
       <option name="project" value="LOCAL" />
       <updated>1675981923534</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="Altered Scanner and Token files, and added the StringLitToken file.">
+      <created>1675982708504</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1675982708504</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -190,39 +197,19 @@
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/TestScanner_starter.java</url>
-          <line>93</line>
-          <option name="timeStamp" value="9" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/edu/ufl/cise/plcsp23/PLCException.java</url>
           <line>6</line>
           <option name="timeStamp" value="11" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/TestScanner_starter.java</url>
-          <line>147</line>
-          <option name="timeStamp" value="14" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-method">
-          <url>file://$PROJECT_DIR$/src/TestScanner_starter.java</url>
-          <line>99</line>
-          <properties class="TestScanner_starter" method="emptyProg">
-            <option name="EMULATED" value="true" />
-            <option name="WATCH_EXIT" value="false" />
-          </properties>
-          <option name="timeStamp" value="10" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-method">
-          <url>file://$PROJECT_DIR$/src/TestScanner_starter.java</url>
-          <line>139</line>
-          <properties class="TestScanner_starter" method="identsAndReserved">
-            <option name="EMULATED" value="true" />
-            <option name="WATCH_EXIT" value="false" />
-          </properties>
-          <option name="timeStamp" value="13" />
+          <line>344</line>
+          <option name="timeStamp" value="36" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
+  </component>
+  <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/JavaProjectPLC$TestScanner_starter_allReservedWords.ic" NAME="TestScanner_starter.allReservedWords Coverage Results" MODIFIED="1676146015600" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
   </component>
 </project>

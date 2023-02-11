@@ -36,7 +36,7 @@ class TestScanner_starter {
 	void checkToken(Kind expectedKind, IToken t) {
 		assertEquals(expectedKind, t.getKind());
 	}
-	
+
 	void checkToken(Kind expectedKind, String expectedChars, SourceLocation expectedLocation, IToken t) {
 		assertEquals(expectedKind, t.getKind());
 		assertEquals(expectedChars, t.getTokenString());
@@ -67,7 +67,7 @@ class TestScanner_starter {
 		int value = ((INumLitToken) t).getValue();
 		assertEquals(expectedValue, value);
 	}
-	
+
 	void checkNUM_LIT(int expectedValue, SourceLocation expectedLocation, IToken t) {
 		checkToken(Kind.NUM_LIT, t);
 		int value = ((INumLitToken) t).getValue();
@@ -88,14 +88,12 @@ class TestScanner_starter {
 		}
 	}
 
-	// check that this token is the EOF token
-	// PASSES
 	void checkEOF(IToken t) {
 		checkToken(Kind.EOF, t);
 	}
 
 
-	// PASSES
+	//PASSING TEST CASES!!!---------------------------------------------------------------------------------------------
 	@Test
 	void emptyProg() throws LexicalException {
 		String input = "";
@@ -124,9 +122,9 @@ class TestScanner_starter {
 		checkNUM_LIT(240, scanner.next());
 		checkEOF(scanner.next());
 	}
-	
+
 	@Test
-	//Too large should still throw LexicalException
+		//Too large should still throw LexicalException
 	void numLitTooBig() throws LexicalException {
 		String input = "999999999999999999999";
 		IScanner scanner = CompilerComponentFactory.makeScanner(input);
@@ -134,25 +132,6 @@ class TestScanner_starter {
 			scanner.next();
 		});
 	}
-
-
-	@Test
-	void identsAndReserved() throws LexicalException {
-		String input = """
-				i0
-				  i1  x ~~~2 spaces at beginning and after il
-				y Y
-				""";
-
-		IScanner scanner = CompilerComponentFactory.makeScanner(input);
-		checkToken(Kind.IDENT,"i0", new SourceLocation(1,1), scanner.next());
-		checkToken(Kind.IDENT, "i1",new SourceLocation(2,3), scanner.next());
-		checkToken(Kind.RES_x, "x", new SourceLocation(2,7), scanner.next());		
-		checkToken(Kind.RES_y, "y", new SourceLocation(3,1), scanner.next());
-		checkToken(Kind.RES_Y, "Y", new SourceLocation(3,3), scanner.next());
-		checkEOF(scanner.next());
-	}
-	
 
 	@Test
 	void operators0() throws LexicalException {
@@ -176,67 +155,6 @@ class TestScanner_starter {
 		checkEOF(scanner.next());
 	}
 
-
-	@Test
-	void stringLiterals1() throws LexicalException {
-		String input = """
-				"hello"
-				"\t"
-				"\\""
-				""";
-		IScanner scanner = CompilerComponentFactory.makeScanner(input);
-		checkString(input.substring(0, 7),"hello", new SourceLocation(1,1), scanner.next());
-		checkString(input.substring(8, 11), "\t", new SourceLocation(2,1), scanner.next());
-		checkString(input.substring(12, 16), "\"",  new SourceLocation(3,1), scanner.next());
-		checkEOF(scanner.next());
-	}
-
-
-	@Test
-	void illegalEscape() throws LexicalException {
-		String input = """
-				"\\t"
-				"\\k"
-				""";
-		IScanner scanner = CompilerComponentFactory.makeScanner(input);
-		checkString("\"\\t\"","\t", new SourceLocation(1,1), scanner.next());
-		assertThrows(LexicalException.class, () -> {
-			scanner.next();
-		});
-	}
-	
-	@Test
-	void illegalLineTermInStringLiteral() throws LexicalException {
-		String input = """
-				"\\n"  ~ this one passes the escape sequence--it is OK
-				"\n"   ~ this on passes the LF, it is illegal.
-				""";
-		IScanner scanner = CompilerComponentFactory.makeScanner(input);
-		checkString("\"\\n\"","\n", new SourceLocation(1,1), scanner.next());
-		assertThrows(LexicalException.class, () -> {
-			scanner.next();
-		});
-	}
-
-	@Test
-	void lessThanGreaterThanExchange() throws LexicalException {
-		String input = """
-				<->>>>=
-				<<=<
-				""";
-		checkTokens(input, Kind.EXCHANGE, Kind.GT, Kind.GT, Kind.GE, Kind.LT, Kind.LE, Kind.LT, Kind.EOF);
-	}
-	
-	/** The Scanner should not backtrack so this input should throw an exception */
-	@Test
-	void incompleteExchangeThrowsException() throws LexicalException {
-		String input = " <- ";
-		IScanner scanner = CompilerComponentFactory.makeScanner(input);
-		assertThrows(LexicalException.class, () -> {
-			scanner.next();
-		});	
-	}
-
 	@Test
 	void illegalChar() throws LexicalException {
 		String input = """
@@ -249,6 +167,39 @@ class TestScanner_starter {
 			@SuppressWarnings("unused")
 			IToken t = scanner.next();
 		});
+	}
+
+	@Test
+	void numLits() throws LexicalException {
+		String input = """
+				123
+				05
+				240
+				1+2
+				""";
+		IScanner scanner = CompilerComponentFactory.makeScanner(input);
+		checkNUM_LIT(Integer.parseInt("123"), scanner.next());
+		checkNUM_LIT(Integer.parseInt("0"), scanner.next());
+		checkNUM_LIT(Integer.parseInt("5"), scanner.next());
+		checkNUM_LIT(Integer.parseInt("240"), scanner.next());
+		checkNUM_LIT(Integer.parseInt("1"), scanner.next());
+		checkToken(Kind.PLUS, scanner.next());
+		checkNUM_LIT(Integer.parseInt("2"), scanner.next());
+	}
+
+	@Test
+	void singleCharTokensWithWhiteSpace() throws LexicalException {
+		String input = """
+				+ *
+				0
+				0
+				""";
+		IScanner scanner = CompilerComponentFactory.makeScanner(input);
+		checkToken(Kind.PLUS, scanner.next());
+		checkToken(Kind.TIMES, scanner.next());
+		checkToken(Kind.NUM_LIT, scanner.next());
+		checkToken(Kind.NUM_LIT, scanner.next());
+		checkEOF(scanner.next());
 	}
 
 	@Test
@@ -287,6 +238,100 @@ class TestScanner_starter {
 		checkToken(Kind.EXP, scanner.next());
 		checkToken(Kind.DIV, scanner.next());
 		checkToken(Kind.MOD, scanner.next());
+	}
+
+	@Test
+	void eqWithError() throws LexicalException {
+		String input = """
+				==
+				=+
+				""";
+		IScanner scanner = CompilerComponentFactory.makeScanner(input);
+		checkToken(Kind.EQ, scanner.next());
+		assertThrows(LexicalException.class, () -> {
+			scanner.next();
+		});
+	}
+
+
+
+	//FAILING TEST CASES -----------------------------------------------------------------------------------------------
+	@Test
+	void identsAndReserved() throws LexicalException {
+		String input = """
+				i0
+				  i1  x ~~~2 spaces at beginning and after il
+				y Y
+				""";
+
+		IScanner scanner = CompilerComponentFactory.makeScanner(input);
+		checkToken(Kind.IDENT, "i0", new SourceLocation(1, 1), scanner.next());
+		checkToken(Kind.IDENT, "i1", new SourceLocation(2, 3), scanner.next());
+		checkToken(Kind.RES_x, "x", new SourceLocation(2, 7), scanner.next());
+		checkToken(Kind.RES_y, "y", new SourceLocation(3, 1), scanner.next());
+		checkToken(Kind.RES_Y, "Y", new SourceLocation(3, 3), scanner.next());
+		checkEOF(scanner.next());
+	}
+
+	@Test
+	void stringLiterals1() throws LexicalException {
+		String input = """
+				"hello"
+				"\t"
+				"\\""
+				""";
+		IScanner scanner = CompilerComponentFactory.makeScanner(input);
+		checkString(input.substring(0, 7), "hello", new SourceLocation(1, 1), scanner.next());
+		checkString(input.substring(8, 11), "\t", new SourceLocation(2, 1), scanner.next());
+		checkString(input.substring(12, 16), "\"", new SourceLocation(3, 1), scanner.next());
+		checkEOF(scanner.next());
+	}
+
+	@Test
+	void illegalEscape() throws LexicalException {
+		String input = """
+				"\\t"
+				"\\k"
+				""";
+		IScanner scanner = CompilerComponentFactory.makeScanner(input);
+		checkString("\"\\t\"", "\t", new SourceLocation(1, 1), scanner.next());
+		assertThrows(LexicalException.class, () -> {
+			scanner.next();
+		});
+	}
+
+	@Test
+	void illegalLineTermInStringLiteral() throws LexicalException {
+		String input = """
+				"\\n"  ~ this one passes the escape sequence--it is OK
+				"\n"   ~ this on passes the LF, it is illegal.
+				""";
+		IScanner scanner = CompilerComponentFactory.makeScanner(input);
+		checkString("\"\\n\"", "\n", new SourceLocation(1, 1), scanner.next());
+		assertThrows(LexicalException.class, () -> {
+			scanner.next();
+		});
+	}
+
+	@Test
+	void lessThanGreaterThanExchange() throws LexicalException {
+		String input = """
+				<->>>>=
+				<<=<
+				""";
+		checkTokens(input, Kind.EXCHANGE, Kind.GT, Kind.GT, Kind.GE, Kind.LT, Kind.LE, Kind.LT, Kind.EOF);
+	}
+
+	/**
+	 * The Scanner should not backtrack so this input should throw an exception
+	 */
+	@Test
+	void incompleteExchangeThrowsException() throws LexicalException {
+		String input = " <- ";
+		IScanner scanner = CompilerComponentFactory.makeScanner(input);
+		assertThrows(LexicalException.class, () -> {
+			scanner.next();
+		});
 	}
 
 	@Test
@@ -331,14 +376,14 @@ class TestScanner_starter {
 				doesthis+work.for-you?
 				""";
 		IScanner scanner = CompilerComponentFactory.makeScanner(input);
-		checkToken(Kind.IDENT,"doesthis", new SourceLocation(1,1), scanner.next());
+		checkToken(Kind.IDENT, "doesthis", new SourceLocation(1, 1), scanner.next());
 		checkToken(Kind.PLUS, scanner.next());
-		checkToken(Kind.IDENT,"work", new SourceLocation(1,10), scanner.next());
+		checkToken(Kind.IDENT, "work", new SourceLocation(1, 10), scanner.next());
 		checkToken(Kind.DOT, scanner.next());
 		// for is NOT a reserved word, oddly enough
-		checkToken(Kind.IDENT,"for", new SourceLocation(1,15), scanner.next());
+		checkToken(Kind.IDENT, "for", new SourceLocation(1, 15), scanner.next());
 		checkToken(Kind.MINUS, scanner.next());
-		checkToken(Kind.IDENT,"you", new SourceLocation(1,19), scanner.next());
+		checkToken(Kind.IDENT, "you", new SourceLocation(1, 19), scanner.next());
 		checkToken(Kind.QUESTION, scanner.next());
 	}
 
@@ -351,113 +396,67 @@ class TestScanner_starter {
 		IScanner scanner = CompilerComponentFactory.makeScanner(input);
 
 		checkToken(Kind.RES_image, scanner.next());
-		checkToken(Kind.IDENT,"imagee", new SourceLocation(1,7), scanner.next());
-		checkToken(Kind.IDENT,"limage", new SourceLocation(1,14), scanner.next());
-		checkToken(Kind.IDENT,"pixelx", new SourceLocation(1,21), scanner.next());
-		checkToken(Kind.IDENT,"inty", new SourceLocation(1,28), scanner.next());
+		checkToken(Kind.IDENT, "imagee", new SourceLocation(1, 7), scanner.next());
+		checkToken(Kind.IDENT, "limage", new SourceLocation(1, 14), scanner.next());
+		checkToken(Kind.IDENT, "pixelx", new SourceLocation(1, 21), scanner.next());
+		checkToken(Kind.IDENT, "inty", new SourceLocation(1, 28), scanner.next());
 		checkToken(Kind.RES_int, scanner.next());
-		checkToken(Kind.IDENT,"stringz", new SourceLocation(1,37), scanner.next());
-		checkToken(Kind.IDENT,"astring", new SourceLocation(1,45), scanner.next());
-		checkToken(Kind.IDENT,"voida", new SourceLocation(1,53), scanner.next());
-		checkToken(Kind.IDENT,"nill", new SourceLocation(1,59), scanner.next());
-		checkToken(Kind.IDENT,"loadd", new SourceLocation(1,64), scanner.next());
+		checkToken(Kind.IDENT, "stringz", new SourceLocation(1, 37), scanner.next());
+		checkToken(Kind.IDENT, "astring", new SourceLocation(1, 45), scanner.next());
+		checkToken(Kind.IDENT, "voida", new SourceLocation(1, 53), scanner.next());
+		checkToken(Kind.IDENT, "nill", new SourceLocation(1, 59), scanner.next());
+		checkToken(Kind.IDENT, "loadd", new SourceLocation(1, 64), scanner.next());
 		checkToken(Kind.RES_load, scanner.next());
-		checkToken(Kind.IDENT,"displayy", new SourceLocation(1,75), scanner.next());
-		checkToken(Kind.IDENT,"ewrite", new SourceLocation(1,84), scanner.next());
+		checkToken(Kind.IDENT, "displayy", new SourceLocation(1, 75), scanner.next());
+		checkToken(Kind.IDENT, "ewrite", new SourceLocation(1, 84), scanner.next());
 		checkToken(Kind.RES_write, scanner.next());
-		checkToken(Kind.IDENT,"xx", new SourceLocation(2,1), scanner.next());
-		checkToken(Kind.IDENT,"yy", new SourceLocation(2,4), scanner.next());
-		checkToken(Kind.IDENT,"aa", new SourceLocation(2,7), scanner.next());
-		checkToken(Kind.IDENT,"rr", new SourceLocation(2,10), scanner.next());
-		checkToken(Kind.IDENT,"XX", new SourceLocation(2,13), scanner.next());
-		checkToken(Kind.IDENT,"YY", new SourceLocation(2,16), scanner.next());
-		checkToken(Kind.IDENT,"ZZ", new SourceLocation(2,19), scanner.next());
-		checkToken(Kind.IDENT,"x_cartt", new SourceLocation(2,22), scanner.next());
-		checkToken(Kind.IDENT,"y_cartt", new SourceLocation(2,30), scanner.next());
-		checkToken(Kind.IDENT,"xa_polar", new SourceLocation(2,38), scanner.next());
+		checkToken(Kind.IDENT, "xx", new SourceLocation(2, 1), scanner.next());
+		checkToken(Kind.IDENT, "yy", new SourceLocation(2, 4), scanner.next());
+		checkToken(Kind.IDENT, "aa", new SourceLocation(2, 7), scanner.next());
+		checkToken(Kind.IDENT, "rr", new SourceLocation(2, 10), scanner.next());
+		checkToken(Kind.IDENT, "XX", new SourceLocation(2, 13), scanner.next());
+		checkToken(Kind.IDENT, "YY", new SourceLocation(2, 16), scanner.next());
+		checkToken(Kind.IDENT, "ZZ", new SourceLocation(2, 19), scanner.next());
+		checkToken(Kind.IDENT, "x_cartt", new SourceLocation(2, 22), scanner.next());
+		checkToken(Kind.IDENT, "y_cartt", new SourceLocation(2, 30), scanner.next());
+		checkToken(Kind.IDENT, "xa_polar", new SourceLocation(2, 38), scanner.next());
 		checkToken(Kind.RES_r_polar, scanner.next());
-		checkToken(Kind.IDENT,"randd", new SourceLocation(2,55), scanner.next());
-		checkToken(Kind.IDENT,"sinn", new SourceLocation(2,61), scanner.next());
-		checkToken(Kind.IDENT,"cosss", new SourceLocation(2,66), scanner.next());
-		checkToken(Kind.IDENT,"atann", new SourceLocation(2,72), scanner.next());
-		checkToken(Kind.IDENT,"iff", new SourceLocation(2,78), scanner.next());
-		checkToken(Kind.IDENT,"whilee", new SourceLocation(2,82), scanner.next());
+		checkToken(Kind.IDENT, "randd", new SourceLocation(2, 55), scanner.next());
+		checkToken(Kind.IDENT, "sinn", new SourceLocation(2, 61), scanner.next());
+		checkToken(Kind.IDENT, "cosss", new SourceLocation(2, 66), scanner.next());
+		checkToken(Kind.IDENT, "atann", new SourceLocation(2, 72), scanner.next());
+		checkToken(Kind.IDENT, "iff", new SourceLocation(2, 78), scanner.next());
+		checkToken(Kind.IDENT, "whilee", new SourceLocation(2, 82), scanner.next());
 	}
 
 	@Test
-	void singleCharTokens() throws LexicalException{
+	void singleCharTokens() throws LexicalException {
 		String input = "+*00";
 		IScanner scanner = CompilerComponentFactory.makeScanner(input);
-		checkToken(Kind.PLUS,scanner.next());
-		checkToken(Kind.TIMES,scanner.next());
-		checkToken(Kind.NUM_LIT,scanner.next());
-		checkToken(Kind.NUM_LIT,scanner.next());
+		checkToken(Kind.PLUS, scanner.next());
+		checkToken(Kind.TIMES, scanner.next());
+		checkToken(Kind.NUM_LIT, scanner.next());
+		checkToken(Kind.NUM_LIT, scanner.next());
 		checkEOF(scanner.next());
 	}
 
 	@Test
-	void singleCharTokensWithWhiteSpace() throws LexicalException{
+	void equals() throws LexicalException {
 		String input = """
-    + *
-    0
-    0
-    """;
+				==
+				== ==
+				==*==
+				*==+
+				""";
 		IScanner scanner = CompilerComponentFactory.makeScanner(input);
-		checkToken(Kind.PLUS,scanner.next());
-		checkToken(Kind.TIMES,scanner.next());
-		checkToken(Kind.NUM_LIT,scanner.next());
-		checkToken(Kind.NUM_LIT,scanner.next());
-		checkEOF(scanner.next());
-	}
-
-	@Test
-	void equals() throws LexicalException{
-		String input = """
-    ==
-    == ==
-    ==*==
-    *==+
-    """;
-		IScanner scanner = CompilerComponentFactory.makeScanner(input);
-		checkToken(Kind.EQ,scanner.next());
-		checkToken(Kind.EQ,scanner.next());
-		checkToken(Kind.EQ,scanner.next());
-		checkToken(Kind.EQ,scanner.next());
-		checkToken(Kind.TIMES,scanner.next());
-		checkToken(Kind.EQ,scanner.next());
-		checkToken(Kind.TIMES,scanner.next());
-		checkToken(Kind.EQ,scanner.next());
-		checkToken(Kind.PLUS,scanner.next());
-	}
-
-	@Test
-	void eqWithError() throws LexicalException{
-		String input = """
-    ==
-    =+
-    """;
-		IScanner scanner = CompilerComponentFactory.makeScanner(input);
-		checkToken(Kind.EQ,scanner.next());
-		assertThrows(LexicalException.class, () -> {
-			scanner.next();
-		});
-	}
-
-	@Test
-	void numLits() throws LexicalException{
-		String input = """
-    123
-    05
-    240
-    1+2
-    """;
-		IScanner scanner = CompilerComponentFactory.makeScanner(input);
-		checkNUM_LIT(Integer.parseInt("123"),scanner.next());
-		checkNUM_LIT(Integer.parseInt("0"),scanner.next());
-		checkNUM_LIT(Integer.parseInt("5"),scanner.next());
-		checkNUM_LIT(Integer.parseInt("240"),scanner.next());
-		checkNUM_LIT(Integer.parseInt("1"),scanner.next());
-		checkToken(Kind.PLUS,scanner.next());
-		checkNUM_LIT(Integer.parseInt("2"),scanner.next());
+		checkToken(Kind.EQ, scanner.next());
+		checkToken(Kind.EQ, scanner.next());
+		checkToken(Kind.EQ, scanner.next());
+		checkToken(Kind.EQ, scanner.next());
+		checkToken(Kind.TIMES, scanner.next());
+		checkToken(Kind.EQ, scanner.next());
+		checkToken(Kind.TIMES, scanner.next());
+		checkToken(Kind.EQ, scanner.next());
+		checkToken(Kind.PLUS, scanner.next());
 	}
 }

@@ -16,7 +16,6 @@ public class Scanner implements IScanner {
     int line;
     int column;
     int length;
-    int intValue;
 
     private enum State { // BASICALLY THE CIRCLE
         START,
@@ -30,8 +29,6 @@ public class Scanner implements IScanner {
         HAVE_EXP,
         HAVE_GT,
         IN_COMMENT
-
-
     }
 
 
@@ -41,11 +38,8 @@ public class Scanner implements IScanner {
         pos = 0;
         ch = inputChars[pos]; //char at that pos
 
-
         System.out.println(inputChars);
         System.out.println(ch);
-
-
     }
 
     // Store reserved words in a hash map for easy lookup, Maps the string to the token kind
@@ -80,7 +74,8 @@ public class Scanner implements IScanner {
         reservedWords.put("while", IToken.Kind.RES_while);
     }
 
-    public static HashMap<String, IToken.Kind> opsAndSeps;
+    //Might not need
+/*    public static HashMap<String, IToken.Kind> opsAndSeps;
 
     static {
         opsAndSeps = new HashMap<>();
@@ -112,15 +107,13 @@ public class Scanner implements IScanner {
         opsAndSeps.put("**", IToken.Kind.EXP);
         opsAndSeps.put("/", IToken.Kind.DIV);
         opsAndSeps.put("%", IToken.Kind.MOD);
-    }
+    }*/
 
     @Override
     public IToken next() throws LexicalException {
         // call scanToken
         // return the next token
         return scanToken();
-
-
     }
 
     protected void nextChar() {
@@ -146,7 +139,6 @@ public class Scanner implements IScanner {
         throw new LexicalException("Error at pos " + pos + ": " + message);
     }
 
-
     private Token scanToken() throws LexicalException {
         State state = State.START;
         int tokenStart = -1; // position of first char in token
@@ -161,7 +153,7 @@ public class Scanner implements IScanner {
                             return new Token(IToken.Kind.EOF, tokenStart, 0, line, column, inputChars);
                         }
                         //<WHITESPACE> AND <ESCAPE_SEQUENCE>
-                        case ' ', '\n', '\b', '\t', '\r', '\"', '\\' -> {
+                        case ' ', '\n', '\b', '\t', '\r', '\f', '\"', '\\' -> {
                             nextChar();
                         }
                         //<OP> OR <SEPERATOR> (ALL THE SINGLE)
@@ -263,10 +255,7 @@ public class Scanner implements IScanner {
                         case '1', '2', '3', '4', '5', '6', '7', '8', '9' -> {   //nonzero digit
                             state = State.IN_NUM_LIT;
                         }
-                       // case 'A', 'B', 'C', 'D','E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y',
-//'Z', 'a', 'b', 'c', 'd','e', 'f', 'g', 'h','i', 'j', 'k', 'l','m', 'n', 'o', 'p','q', 'r', 's', 't','u', 'v', 'w', 'y','x', 'z' ->
-                        // String lit
-
+                        //Idents and reserved words
                         default -> {
                           if (isLetter(ch)) {
                               state = State.IN_IDENT;
@@ -345,12 +334,10 @@ public class Scanner implements IScanner {
                         return new Token(IToken.Kind.OR, tokenStart, 2, line, column, inputChars);
 
                     } else { //add if they have regular symbols next to it
-                        throw new LexicalException("error: = expected");
+                        //throw new LexicalException("error: = expected");
+                        return new Token(IToken.Kind.BITOR, tokenStart, 2, line, column, inputChars);
                     }
-
-
                 }
-
                 //**
                 case HAVE_EXP -> {
                     if (ch == '*') {
@@ -365,45 +352,57 @@ public class Scanner implements IScanner {
                     }
                 }
                 case IN_IDENT -> {
-                    length = 0;
+                    length = pos - tokenStart;
                     while (isIdentStart(ch)){
-                      length++;
-                        nextChar();
-                    }
-                        if (isIdentStart(ch) || isDigit(ch)){
-                            length++;
-                            nextChar();
-                        }
-                        else {
-                            state = state.START;
-return new StringLitToken(IToken.Kind.IDENT, tokenStart, length, line, column, inputChars);
-                        }
-                }
-                case IN_STRING_LIT -> {
-
-
-                }
-                case IN_NUM_LIT -> {
-                    length = 0;
-                    while (isDigit(ch) == true) {
                         length++;
                         nextChar();
                     }
-                    // throws the lexical exception for the numLitTooBig (maybe later use .getValue and actaully find if the value is too big..?)
-                    if (length > 20)
-                        error("Error");
-                    state = state.START;
-                    return new NumLitToken(IToken.Kind.NUM_LIT, tokenStart, length, line, column, inputChars);
-
+                    if (isIdentStart(ch) || isDigit(ch)){
+                        length++;
+                        nextChar();
+                    }
+                    else {
+                        state = state.START;
+                        return new StringLitToken(IToken.Kind.IDENT, tokenStart, length, line, column, inputChars);
+                    }
+                }
+                case IN_STRING_LIT -> {
+                    if (ch == '\\') {
+                        nextChar();
+                        if (ch != 'r' && ch != 't' && ch != 'f' && ch != '\\' && ch != '"' && ch != 'n') {
+                            throw new LexicalException("illegal escape sequence");
+                        } else {
+                            nextChar();
+                        }
+                    } else if (ch == '\n') {
+                        throw new LexicalException("illegal escape sequence");
+                    } else if (ch != '"') {
+                        nextChar();
+                    } else {
+                        int length = pos - tokenStart + 1;
+                        nextChar();
+                        return new StringLitToken(IToken.Kind.STRING_LIT, tokenStart, length, line, column, inputChars);
+                    }
+                }
+                case IN_NUM_LIT -> {
+                    if (isDigit(ch)) {
+                        nextChar();
+                    } else {
+                        int length = pos-tokenStart;
+                        String number = new String(inputChars, tokenStart, length);
+                        try {
+                            Integer.parseInt(number);
+                            return new NumLitToken(IToken.Kind.NUM_LIT, tokenStart, length, line, column, inputChars);
+                        } catch (Exception e) {
+                            throw new LexicalException("num lit not in range");
+                        }
+                    }
                 }
                 //check commit changes
                 default -> {
                     throw new UnsupportedOperationException("Bug in the Scanner");
                 }
-
             }
-
-
         }
     }
 }
