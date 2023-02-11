@@ -1,34 +1,56 @@
 package edu.ufl.cise.plcsp23;
+
 import java.util.Arrays;
 import java.util.HashMap;
 
+
 public class Scanner implements IScanner {
-
-    // Variables
     final String input;
+    // char arrary of the input, temrin w extra char 0 (EOF?)
     final char[] inputChars;
-    //NumLitToken numLitToken;
-    //StringLitToken strLitToken;
 
+    //imply this is true in constructor
+    // invariant ch == inputChars[pos]
     int pos; // position of the character in the input
     char ch; // next char
     int line;
     int column;
     int length;
+    int intValue;
 
-
-    // Enumeration of the internal states of the token (basically the kind of token)
-    private enum State {
+    private enum State { // BASICALLY THE CIRCLE
         START,
         IN_IDENT,
         IN_STRING_LIT,
         IN_NUM_LIT,
-        IN_COMMENT,
- 
+        HAVE_EQUAL,
+        HAVE_LT,
+        HAVE_AND,
+        HAVE_OR,
+        HAVE_EXP,
+        HAVE_GT,
+        IN_COMMENT
+
+
+    }
+
+
+    public Scanner(String input) {
+        this.input = input;
+        inputChars = Arrays.copyOf(input.toCharArray(), input.length() + 1);
+        pos = 0;
+        ch = inputChars[pos]; //char at that pos
+
+
+        System.out.println(inputChars);
+        System.out.println(ch);
+
+
     }
 
     // Store reserved words in a hash map for easy lookup, Maps the string to the token kind
-    public static HashMap<String,IToken.Kind> reservedWords;
+    public static HashMap<String, IToken.Kind> reservedWords;
+
     static {
         reservedWords = new HashMap<>();
         reservedWords.put("image", IToken.Kind.RES_image);
@@ -58,8 +80,8 @@ public class Scanner implements IScanner {
         reservedWords.put("while", IToken.Kind.RES_while);
     }
 
-    // Stores operators and separators in a hash map for easy lookup, Maps the string to the token kind
     public static HashMap<String, IToken.Kind> opsAndSeps;
+
     static {
         opsAndSeps = new HashMap<>();
         opsAndSeps.put(".", IToken.Kind.DOT);
@@ -92,26 +114,16 @@ public class Scanner implements IScanner {
         opsAndSeps.put("%", IToken.Kind.MOD);
     }
 
-    // Scanner to scan input. Goes through tokens and turns them into tokens
-    public Scanner(String input){
-        this.input = input;
-        inputChars = Arrays.copyOf(input.toCharArray(), input.length()+1);
-        pos = 0;
-        ch = inputChars[pos]; //char at that pos
-        chIs0 = true;
-
-        System.out.println(inputChars);
-        System.out.println(ch);
-    }
-
     @Override
     public IToken next() throws LexicalException {
         // call scanToken
         // return the next token
         return scanToken();
+
+
     }
 
-    protected void nextChar(){
+    protected void nextChar() {
         pos++;
         ch = inputChars[pos];
     }
@@ -134,9 +146,9 @@ public class Scanner implements IScanner {
         throw new LexicalException("Error at pos " + pos + ": " + message);
     }
 
-    /// TO CHANGE
+
     private Token scanToken() throws LexicalException {
-        edu.ufl.cise.plcsp23.Scanner.State state = edu.ufl.cise.plcsp23.Scanner.State.START;
+        State state = State.START;
         int tokenStart = -1; // position of first char in token
 
         while (true) { // reading if char is valid, temrinates whne token/ eof is returned
@@ -178,11 +190,11 @@ public class Scanner implements IScanner {
                             return new Token(IToken.Kind.RPAREN, tokenStart, 1, line, column, inputChars);
                         }
                         case '<' -> {
-                            state = edu.ufl.cise.plcsp23.Scanner.State.HAVE_LT;
+                            state = State.HAVE_LT;
                             nextChar();
                         }
                         case '>' -> {
-                            state = edu.ufl.cise.plcsp23.Scanner.State.HAVE_GT;
+                            state = State.HAVE_GT;
                             nextChar();
                         }
                         case '[' -> {
@@ -202,7 +214,7 @@ public class Scanner implements IScanner {
                             return new Token(IToken.Kind.RCURLY, tokenStart, 1, line, column, inputChars);
                         }
                         case '=' -> {
-                            state = edu.ufl.cise.plcsp23.Scanner.State.HAVE_EQUAL;
+                            state = State.HAVE_EQUAL;
                             nextChar();
                         }
                         case '!' -> {
@@ -214,7 +226,7 @@ public class Scanner implements IScanner {
                             nextChar();
                         }
                         case '|' -> {
-                            state = edu.ufl.cise.plcsp23.Scanner.State.HAVE_OR;
+                            state = State.HAVE_OR;
                             nextChar();
                         }
                         case '+' -> {
@@ -226,7 +238,7 @@ public class Scanner implements IScanner {
                             return new Token(IToken.Kind.MINUS, tokenStart, 1, line, column, inputChars);
                         }
                         case '*' -> {
-                            state = edu.ufl.cise.plcsp23.Scanner.State.HAVE_EXP;
+                            state = State.HAVE_EXP;
                             nextChar();
                         }
                         case '/' -> {
@@ -238,62 +250,161 @@ public class Scanner implements IScanner {
                             return new Token(IToken.Kind.MOD, tokenStart, 1, line, column, inputChars);
                         }
                         //comments
+
                         case '~' -> {
                             state = State.IN_COMMENT;
                             nextChar();
                         }
 
-                        //zero num literal
                         case '0' -> {
                             nextChar();
                             return new NumLitToken(IToken.Kind.NUM_LIT, tokenStart, 1, line, column, inputChars);
                         }
-
-                        //num literals
                         case '1', '2', '3', '4', '5', '6', '7', '8', '9' -> {   //nonzero digit
-                            state = State.IN_NUM_LIT;             
+                            state = State.IN_NUM_LIT;
                         }
+                       // case 'A', 'B', 'C', 'D','E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y',
+//'Z', 'a', 'b', 'c', 'd','e', 'f', 'g', 'h','i', 'j', 'k', 'l','m', 'n', 'o', 'p','q', 'r', 's', 't','u', 'v', 'w', 'y','x', 'z' ->
+                        // String lit
 
-                        //idents or reserved words
                         default -> {
-                            if (isIdentStart(ch)) {
-                                state = State.IN_IDENT;
-                                nextChar();
-                            } else error("illegal char with ascii value: " + (int) ch);
+                          if (isLetter(ch)) {
+                              state = State.IN_IDENT;
+                            //  nextChar();
+                          }
+//                          if (ch == '"'){
+//                              state = State.IN_STRING_LIT;
+//                              nextChar();
+//                          }
+                          else error("illegal!!!");
+
                         }
                     }
                 }
+                //==
+                case HAVE_EQUAL -> {
+                    if (ch == '=') { // "==" checking the next input
+                        state = state.START;
+                        nextChar();
+                        return new Token(IToken.Kind.EQ, tokenStart, 2, line, column, inputChars);
+                    } else { // DECALARES THE = ASSIGNS KIND
+                        throw new LexicalException("error: = expected");
+                    }
+                }
+                // <= , <->,
+                case HAVE_LT -> {
+                    if (ch == '=') {
+                        state = state.START;
+                        nextChar();
+                        return new Token(IToken.Kind.LE, tokenStart, 2, line, column, inputChars);
+                    }
+                    if (ch == '-') {
+                        nextChar();
+                        if (ch == '>') {
+                            state = state.START;
+                            nextChar();
+                            return new Token(IToken.Kind.EXCHANGE, tokenStart, 3, line, column, inputChars);
+                        }
+                    } else {
+                        state = state.START;
+                        nextChar();
+                        return new Token(IToken.Kind.LT, tokenStart, 1, line, column, inputChars);
+                    }
+                }
+                //>=
+                case HAVE_GT -> {
+                    if (ch == '=') {
+                        state = state.START;
+                        nextChar();
+                        return new Token(IToken.Kind.GE, tokenStart, 2, line, column, inputChars);
+                    } else {
+                        state = state.START;
+                        nextChar();
+                        return new Token(IToken.Kind.GT, tokenStart, 1, line, column, inputChars);
 
+                    }
+                }
+                //&&
+                case HAVE_AND -> {
+                    if (ch == '&') {
+                        state = state.START;
+                        nextChar();
+                        return new Token(IToken.Kind.AND, tokenStart, 2, line, column, inputChars);
+
+                    } else {
+                        state = state.START;
+                        nextChar();
+                        return new Token(IToken.Kind.BITAND, tokenStart, 1, line, column, inputChars);
+                    }
+                }
+                //||
+                case HAVE_OR -> {
+                    if (ch == '|') {
+                        state = state.START;
+                        nextChar();
+                        return new Token(IToken.Kind.OR, tokenStart, 2, line, column, inputChars);
+
+                    } else { //add if they have regular symbols next to it
+                        throw new LexicalException("error: = expected");
+                    }
+
+
+                }
+
+                //**
+                case HAVE_EXP -> {
+                    if (ch == '*') {
+                        state = state.START;
+                        nextChar();
+                        return new Token(IToken.Kind.EXP, tokenStart, 2, line, column, inputChars);
+
+                    } else {
+                        state = state.START;
+                        nextChar();
+                        return new Token(IToken.Kind.TIMES, tokenStart, 1, line, column, inputChars);
+                    }
+                }
                 case IN_IDENT -> {
-                }
-                case IN_STRING_LIT -> {
-                }
-                case IN_NUM_LIT ->{
                     length = 0;
-                    while (isDigit(ch) == true){
+                    while (isIdentStart(ch)){
+                      length++;
+                        nextChar();
+                    }
+                        if (isIdentStart(ch) || isDigit(ch)){
                             length++;
                             nextChar();
                         }
-                    // throws the lexical exception for the numLitTooBig (maybe later use .getValue and actaully find if the value is too big..?)
-                        if (length > 20 )
-                        error("Error");
-                    }
-                    //check commit changes
-                        state = state.START;
-                            return new NumLitToken(IToken.Kind.NUM_LIT, tokenStart, length , line, column, inputChars);
-
-                    }
+                        else {
+                            state = state.START;
+return new StringLitToken(IToken.Kind.IDENT, tokenStart, length, line, column, inputChars);
+                        }
                 }
+                case IN_STRING_LIT -> {
+
+
+                }
+                case IN_NUM_LIT -> {
+                    length = 0;
+                    while (isDigit(ch) == true) {
+                        length++;
+                        nextChar();
+                    }
+                    // throws the lexical exception for the numLitTooBig (maybe later use .getValue and actaully find if the value is too big..?)
+                    if (length > 20)
+                        error("Error");
+                    state = state.START;
+                    return new NumLitToken(IToken.Kind.NUM_LIT, tokenStart, length, line, column, inputChars);
+
+                }
+                //check commit changes
                 default -> {
                     throw new UnsupportedOperationException("Bug in the Scanner");
                 }
 
             }
+
+
         }
     }
-
-    //EOF Scanner.Java
 }
-
-
 
