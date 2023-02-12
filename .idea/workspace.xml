@@ -4,7 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="7bf999a8-41a8-46be-9c36-198738bd9545" name="Changes" comment="Altered Scanner and Token files, and added the StringLitToken file.">
+    <list default="true" id="7bf999a8-41a8-46be-9c36-198738bd9545" name="Changes" comment="CASES WORK: &#10;emptyProg(), onlyWhiteSpace(), numLits1(), numLitTooBig(), operators0(), illegalChar(), numLits(), singleCharTokensWithWhiteSpace(), allOperatorsAndSeparators(), eqWithError()">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/TestScanner_starter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/TestScanner_starter.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/edu/ufl/cise/plcsp23/Scanner.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/edu/ufl/cise/plcsp23/Scanner.java" afterDir="false" />
@@ -60,32 +60,12 @@
       <recent name="C:\Users\brook\IdeaProjects\JavaProjectPLC\src" />
     </key>
   </component>
-  <component name="RunManager" selected="JUnit.TestScanner_starter.eqWithError">
-    <configuration name="TestScanner_starter.allOperatorsAndSeparators" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="JavaProjectPLC" />
-      <option name="PACKAGE_NAME" value="" />
-      <option name="MAIN_CLASS_NAME" value="TestScanner_starter" />
-      <option name="METHOD_NAME" value="allOperatorsAndSeparators" />
-      <option name="TEST_OBJECT" value="method" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
+  <component name="RunManager" selected="JUnit.TestScanner_starter.identsAndReserved">
     <configuration name="TestScanner_starter.allReservedWords" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="JavaProjectPLC" />
       <option name="PACKAGE_NAME" value="" />
       <option name="MAIN_CLASS_NAME" value="TestScanner_starter" />
       <option name="METHOD_NAME" value="allReservedWords" />
-      <option name="TEST_OBJECT" value="method" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="TestScanner_starter.eqWithError" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="JavaProjectPLC" />
-      <option name="PACKAGE_NAME" value="" />
-      <option name="MAIN_CLASS_NAME" value="TestScanner_starter" />
-      <option name="METHOD_NAME" value="eqWithError" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -111,13 +91,33 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="TestScanner_starter.illegalLineTermInStringLiteral" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="JavaProjectPLC" />
+      <option name="PACKAGE_NAME" value="" />
+      <option name="MAIN_CLASS_NAME" value="TestScanner_starter" />
+      <option name="METHOD_NAME" value="illegalLineTermInStringLiteral" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="TestScanner_starter.singleCharTokens" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="JavaProjectPLC" />
+      <option name="PACKAGE_NAME" value="" />
+      <option name="MAIN_CLASS_NAME" value="TestScanner_starter" />
+      <option name="METHOD_NAME" value="singleCharTokens" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="JUnit.TestScanner_starter.eqWithError" />
-        <item itemvalue="JUnit.TestScanner_starter.equals" />
         <item itemvalue="JUnit.TestScanner_starter.identsAndReserved" />
+        <item itemvalue="JUnit.TestScanner_starter.illegalLineTermInStringLiteral" />
+        <item itemvalue="JUnit.TestScanner_starter.equals" />
+        <item itemvalue="JUnit.TestScanner_starter.singleCharTokens" />
         <item itemvalue="JUnit.TestScanner_starter.allReservedWords" />
-        <item itemvalue="JUnit.TestScanner_starter.allOperatorsAndSeparators" />
       </list>
     </recent_temporary>
   </component>
@@ -172,7 +172,14 @@
       <option name="project" value="LOCAL" />
       <updated>1675982708504</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="CASES WORK: &#10;emptyProg(), onlyWhiteSpace(), numLits1(), numLitTooBig(), operators0(), illegalChar(), numLits(), singleCharTokensWithWhiteSpace(), allOperatorsAndSeparators(), eqWithError()">
+      <created>1676147676735</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1676147676735</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -191,7 +198,8 @@
     <MESSAGE value="EmptyProg Works!!!" />
     <MESSAGE value="EmptyProg Now Works!!! Added StringLitToken.java and NumLitToken.java file to implement." />
     <MESSAGE value="Altered Scanner and Token files, and added the StringLitToken file." />
-    <option name="LAST_COMMIT_MESSAGE" value="Altered Scanner and Token files, and added the StringLitToken file." />
+    <MESSAGE value="CASES WORK: &#10;emptyProg(), onlyWhiteSpace(), numLits1(), numLitTooBig(), operators0(), illegalChar(), numLits(), singleCharTokensWithWhiteSpace(), allOperatorsAndSeparators(), eqWithError()" />
+    <option name="LAST_COMMIT_MESSAGE" value="CASES WORK: &#10;emptyProg(), onlyWhiteSpace(), numLits1(), numLitTooBig(), operators0(), illegalChar(), numLits(), singleCharTokensWithWhiteSpace(), allOperatorsAndSeparators(), eqWithError()" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -203,8 +211,13 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/TestScanner_starter.java</url>
-          <line>344</line>
-          <option name="timeStamp" value="36" />
+          <line>440</line>
+          <option name="timeStamp" value="42" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/TestScanner_starter.java</url>
+          <line>434</line>
+          <option name="timeStamp" value="52" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

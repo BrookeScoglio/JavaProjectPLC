@@ -3,20 +3,17 @@ package edu.ufl.cise.plcsp23;
 import java.util.Arrays;
 import java.util.HashMap;
 
-
+// Scanner Class!
 public class Scanner implements IScanner {
     final String input;
-    // char arrary of the input, temrin w extra char 0 (EOF?)
-    final char[] inputChars;
-
-    //imply this is true in constructor
-    // invariant ch == inputChars[pos]
+    final char[] inputChars; // char arrary of the input, temrin w extra char 0 (EOF?)
     int pos; // position of the character in the input
     char ch; // next char
-    int line;
-    int column;
+    int line = 1;
+    int column = 1;
     int length;
 
+    // Enumerations of the internal states
     private enum State { // BASICALLY THE CIRCLE
         START,
         IN_IDENT,
@@ -32,6 +29,7 @@ public class Scanner implements IScanner {
     }
 
 
+    //Scanner constructor to initialize variables for scanner class
     public Scanner(String input) {
         this.input = input;
         inputChars = Arrays.copyOf(input.toCharArray(), input.length() + 1);
@@ -44,7 +42,6 @@ public class Scanner implements IScanner {
 
     // Store reserved words in a hash map for easy lookup, Maps the string to the token kind
     public static HashMap<String, IToken.Kind> reservedWords;
-
     static {
         reservedWords = new HashMap<>();
         reservedWords.put("image", IToken.Kind.RES_image);
@@ -74,50 +71,21 @@ public class Scanner implements IScanner {
         reservedWords.put("while", IToken.Kind.RES_while);
     }
 
-    //Might not need
-/*    public static HashMap<String, IToken.Kind> opsAndSeps;
-
-    static {
-        opsAndSeps = new HashMap<>();
-        opsAndSeps.put(".", IToken.Kind.DOT);
-        opsAndSeps.put(",", IToken.Kind.COMMA);
-        opsAndSeps.put("?", IToken.Kind.QUESTION);
-        opsAndSeps.put(":", IToken.Kind.COLON);
-        opsAndSeps.put("(", IToken.Kind.LPAREN);
-        opsAndSeps.put(")", IToken.Kind.RPAREN);
-        opsAndSeps.put("<", IToken.Kind.LT);
-        opsAndSeps.put(">", IToken.Kind.GT);
-        opsAndSeps.put("[", IToken.Kind.LSQUARE);
-        opsAndSeps.put("]", IToken.Kind.RSQUARE);
-        opsAndSeps.put("{", IToken.Kind.LCURLY);
-        opsAndSeps.put("}", IToken.Kind.RCURLY);
-        opsAndSeps.put("=", IToken.Kind.ASSIGN);
-        opsAndSeps.put("==", IToken.Kind.EQ);
-        opsAndSeps.put("<->", IToken.Kind.EXCHANGE);
-        opsAndSeps.put("<=", IToken.Kind.LE);
-        opsAndSeps.put(">=", IToken.Kind.GE);
-        opsAndSeps.put("!", IToken.Kind.BANG);
-        opsAndSeps.put("&", IToken.Kind.BITAND);
-        opsAndSeps.put("&&", IToken.Kind.AND);
-        opsAndSeps.put("|", IToken.Kind.BITOR);
-        opsAndSeps.put("||", IToken.Kind.OR);
-        opsAndSeps.put("+", IToken.Kind.PLUS);
-        opsAndSeps.put("-", IToken.Kind.MINUS);
-        opsAndSeps.put("*", IToken.Kind.TIMES);
-        opsAndSeps.put("**", IToken.Kind.EXP);
-        opsAndSeps.put("/", IToken.Kind.DIV);
-        opsAndSeps.put("%", IToken.Kind.MOD);
-    }*/
-
+    // calls scanToken, return the next token
     @Override
     public IToken next() throws LexicalException {
-        // call scanToken
-        // return the next token
         return scanToken();
     }
 
+    // Helper function to throw Lexical Exceptions
+    private void error(String message) throws LexicalException {
+        throw new LexicalException("Error at pos " + pos + ": " + message);
+    }
+
+    // Helper function to iterate to next character and increases position variables by 1
     protected void nextChar() {
         pos++;
+        column++;
         ch = inputChars[pos];
     }
 
@@ -125,36 +93,35 @@ public class Scanner implements IScanner {
     private boolean isDigit(int ch) {
         return '0' <= ch && ch <= '9';
     }
-
     private boolean isLetter(int ch) {
         return ('A' <= ch && ch <= 'Z') || ('a' <= ch && ch <= 'z');
     }
-
     private boolean isIdentStart(int ch) {
         return isLetter(ch) || (ch == '_');
     }
 
-    // Function to throw exception
-    private void error(String message) throws LexicalException {
-        throw new LexicalException("Error at pos " + pos + ": " + message);
-    }
-
+    // ScanToken function returns the type of token from the string
     private Token scanToken() throws LexicalException {
         State state = State.START;
-        int tokenStart = -1; // position of first char in token
+        int tokenStart = -1;        // position of first char in token set to -1 for error detection
 
-        while (true) { // reading if char is valid, temrinates whne token/ eof is returned
+        // reading if char is valid, terminates when token eof is returned
+        while (true) {
             switch (state) {
                 case START -> {
                     tokenStart = pos;
                     switch (ch) {
                         //EOF
-                        case 0 -> { // EOF (end of file)
+                        case 0 -> {
                             return new Token(IToken.Kind.EOF, tokenStart, 0, line, column, inputChars);
                         }
-                        //<WHITESPACE> AND <ESCAPE_SEQUENCE>
-                        case ' ', '\n', '\b', '\t', '\r', '\f', '\"', '\\' -> {
+                        //whitespace -- changed to account for newlines and escape sequences below
+                        case ' ','\r','\t','\f' -> nextChar();
+                        //newline
+                        case '\n' -> {
                             nextChar();
+                            line++;
+                            column = 1;
                         }
                         //<OP> OR <SEPERATOR> (ALL THE SINGLE)
                         case '.' -> {
@@ -241,32 +208,34 @@ public class Scanner implements IScanner {
                             nextChar();
                             return new Token(IToken.Kind.MOD, tokenStart, 1, line, column, inputChars);
                         }
-                        //comments
-
+                        //comments -- necessary for passing test cases for literals
                         case '~' -> {
                             state = State.IN_COMMENT;
                             nextChar();
                         }
-
+                        //string literals
+                        case '\"' -> {
+                            nextChar();
+                            state = State.IN_STRING_LIT;
+                        }
+                        //numlit 0
                         case '0' -> {
                             nextChar();
                             return new NumLitToken(IToken.Kind.NUM_LIT, tokenStart, 1, line, column, inputChars);
                         }
-                        case '1', '2', '3', '4', '5', '6', '7', '8', '9' -> {   //nonzero digit
+                        //digits 1-9
+                        case '1', '2', '3', '4', '5', '6', '7', '8', '9' -> {
                             state = State.IN_NUM_LIT;
                         }
-                        //Idents and reserved words
+                        // Handles idents and reserved words
                         default -> {
-                          if (isLetter(ch)) {
-                              state = State.IN_IDENT;
-                            //  nextChar();
-                          }
-//                          if (ch == '"'){
-//                              state = State.IN_STRING_LIT;
-//                              nextChar();
-//                          }
-                          else error("illegal!!!");
-
+                            if (isLetter(ch)) {
+                                state = State.IN_IDENT;
+                                nextChar();
+                            } else if (isIdentStart(ch)) {
+                                state = State.IN_IDENT;
+                                nextChar();
+                            } else error("illegal char with ascii value: " + (int)ch);
                         }
                     }
                 }
@@ -276,8 +245,19 @@ public class Scanner implements IScanner {
                         state = state.START;
                         nextChar();
                         return new Token(IToken.Kind.EQ, tokenStart, 2, line, column, inputChars);
-                    } else { // DECALARES THE = ASSIGNS KIND
-                        throw new LexicalException("error: = expected");
+                    } else {
+                        throw new LexicalException("Error in Equals");
+                    }
+                }
+                //inside comment and escapes when it is a \n -- Needed to pass string literals test
+                case IN_COMMENT -> {
+                    if (ch != '\n') {
+                        nextChar();
+                    } else {
+                        line++;
+                        nextChar();
+                        column = 1;
+                        state = state.START;
                     }
                 }
                 // <= , <->,
@@ -293,6 +273,8 @@ public class Scanner implements IScanner {
                             state = state.START;
                             nextChar();
                             return new Token(IToken.Kind.EXCHANGE, tokenStart, 3, line, column, inputChars);
+                        } else {
+                            throw new LexicalException("illegal exchange"); //DETECTS ILLEGAL EXCHANGE (test case)
                         }
                     } else {
                         state = state.START;
@@ -333,8 +315,7 @@ public class Scanner implements IScanner {
                         nextChar();
                         return new Token(IToken.Kind.OR, tokenStart, 2, line, column, inputChars);
 
-                    } else { //add if they have regular symbols next to it
-                        //throw new LexicalException("error: = expected");
+                    } else {
                         return new Token(IToken.Kind.BITOR, tokenStart, 2, line, column, inputChars);
                     }
                 }
@@ -352,18 +333,18 @@ public class Scanner implements IScanner {
                     }
                 }
                 case IN_IDENT -> {
-                    length = pos - tokenStart;
-                    while (isIdentStart(ch)){
-                        length++;
+                    if (isIdentStart(ch)) {
                         nextChar();
-                    }
-                    if (isIdentStart(ch) || isDigit(ch)){
-                        length++;
+                    } else if (isDigit(ch)) {
                         nextChar();
-                    }
-                    else {
-                        state = state.START;
-                        return new StringLitToken(IToken.Kind.IDENT, tokenStart, length, line, column, inputChars);
+                    } else {
+                        length = pos-tokenStart;
+                        String text = input.substring(tokenStart, tokenStart+length);
+                        IToken.Kind kind = reservedWords.get(text);
+                        if (kind == null) {
+                            kind = IToken.Kind.IDENT;
+                        }
+                        return new Token(kind, tokenStart, length, line, column, inputChars);
                     }
                 }
                 case IN_STRING_LIT -> {
@@ -374,12 +355,12 @@ public class Scanner implements IScanner {
                         } else {
                             nextChar();
                         }
-                    } else if (ch == '\n') {
+                    } else if (ch == '\n') {    //Throws lexical exception for illegal escape sequence
                         throw new LexicalException("illegal escape sequence");
                     } else if (ch != '"') {
                         nextChar();
                     } else {
-                        int length = pos - tokenStart + 1;
+                        length = pos-tokenStart+1;
                         nextChar();
                         return new StringLitToken(IToken.Kind.STRING_LIT, tokenStart, length, line, column, inputChars);
                     }
@@ -388,7 +369,7 @@ public class Scanner implements IScanner {
                     if (isDigit(ch)) {
                         nextChar();
                     } else {
-                        int length = pos-tokenStart;
+                        length = pos-tokenStart;
                         String number = new String(inputChars, tokenStart, length);
                         try {
                             Integer.parseInt(number);

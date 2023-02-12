@@ -93,7 +93,7 @@ class TestScanner_starter {
 	}
 
 
-	//PASSING TEST CASES!!!---------------------------------------------------------------------------------------------
+	//PASSING TEST CASES!!!(17)-----------------------------------------------------------------------------------------
 	@Test
 	void emptyProg() throws LexicalException {
 		String input = "";
@@ -241,39 +241,6 @@ class TestScanner_starter {
 	}
 
 	@Test
-	void eqWithError() throws LexicalException {
-		String input = """
-				==
-				=+
-				""";
-		IScanner scanner = CompilerComponentFactory.makeScanner(input);
-		checkToken(Kind.EQ, scanner.next());
-		assertThrows(LexicalException.class, () -> {
-			scanner.next();
-		});
-	}
-
-
-
-	//FAILING TEST CASES -----------------------------------------------------------------------------------------------
-	@Test
-	void identsAndReserved() throws LexicalException {
-		String input = """
-				i0
-				  i1  x ~~~2 spaces at beginning and after il
-				y Y
-				""";
-
-		IScanner scanner = CompilerComponentFactory.makeScanner(input);
-		checkToken(Kind.IDENT, "i0", new SourceLocation(1, 1), scanner.next());
-		checkToken(Kind.IDENT, "i1", new SourceLocation(2, 3), scanner.next());
-		checkToken(Kind.RES_x, "x", new SourceLocation(2, 7), scanner.next());
-		checkToken(Kind.RES_y, "y", new SourceLocation(3, 1), scanner.next());
-		checkToken(Kind.RES_Y, "Y", new SourceLocation(3, 3), scanner.next());
-		checkEOF(scanner.next());
-	}
-
-	@Test
 	void stringLiterals1() throws LexicalException {
 		String input = """
 				"hello"
@@ -301,76 +268,6 @@ class TestScanner_starter {
 	}
 
 	@Test
-	void illegalLineTermInStringLiteral() throws LexicalException {
-		String input = """
-				"\\n"  ~ this one passes the escape sequence--it is OK
-				"\n"   ~ this on passes the LF, it is illegal.
-				""";
-		IScanner scanner = CompilerComponentFactory.makeScanner(input);
-		checkString("\"\\n\"", "\n", new SourceLocation(1, 1), scanner.next());
-		assertThrows(LexicalException.class, () -> {
-			scanner.next();
-		});
-	}
-
-	@Test
-	void lessThanGreaterThanExchange() throws LexicalException {
-		String input = """
-				<->>>>=
-				<<=<
-				""";
-		checkTokens(input, Kind.EXCHANGE, Kind.GT, Kind.GT, Kind.GE, Kind.LT, Kind.LE, Kind.LT, Kind.EOF);
-	}
-
-	/**
-	 * The Scanner should not backtrack so this input should throw an exception
-	 */
-	@Test
-	void incompleteExchangeThrowsException() throws LexicalException {
-		String input = " <- ";
-		IScanner scanner = CompilerComponentFactory.makeScanner(input);
-		assertThrows(LexicalException.class, () -> {
-			scanner.next();
-		});
-	}
-
-	@Test
-	void allReservedWords() throws LexicalException {
-		/* reserved words: image | pixel | int | string | void | nil | load | display | write | x | y | a | r | X  | Y | Z |
-          x_cart | y_cart | a_polar | r_polar | rand | sin | cos | atan  | if | while  */
-		String input = """
-				image pixel int string void nil load display write x y a r X Y Z x_cart y_cart a_polar r_polar rand sin cos atan if while
-				""";
-		IScanner scanner = CompilerComponentFactory.makeScanner(input);
-		checkToken(Kind.RES_image, scanner.next());
-		checkToken(Kind.RES_pixel, scanner.next());
-		checkToken(Kind.RES_int, scanner.next());
-		checkToken(Kind.RES_string, scanner.next());
-		checkToken(Kind.RES_void, scanner.next());
-		checkToken(Kind.RES_nil, scanner.next());
-		checkToken(Kind.RES_load, scanner.next());
-		checkToken(Kind.RES_display, scanner.next());
-		checkToken(Kind.RES_write, scanner.next());
-		checkToken(Kind.RES_x, scanner.next());
-		checkToken(Kind.RES_y, scanner.next());
-		checkToken(Kind.RES_a, scanner.next());
-		checkToken(Kind.RES_r, scanner.next());
-		checkToken(Kind.RES_X, scanner.next());
-		checkToken(Kind.RES_Y, scanner.next());
-		checkToken(Kind.RES_Z, scanner.next());
-		checkToken(Kind.RES_x_cart, scanner.next());
-		checkToken(Kind.RES_y_cart, scanner.next());
-		checkToken(Kind.RES_a_polar, scanner.next());
-		checkToken(Kind.RES_r_polar, scanner.next());
-		checkToken(Kind.RES_rand, scanner.next());
-		checkToken(Kind.RES_sin, scanner.next());
-		checkToken(Kind.RES_cos, scanner.next());
-		checkToken(Kind.RES_atan, scanner.next());
-		checkToken(Kind.RES_if, scanner.next());
-		checkToken(Kind.RES_while, scanner.next());
-	}
-
-	@Test
 	void doOperatorsSeparateTokens() throws LexicalException {
 		String input = """
 				doesthis+work.for-you?
@@ -385,6 +282,29 @@ class TestScanner_starter {
 		checkToken(Kind.MINUS, scanner.next());
 		checkToken(Kind.IDENT, "you", new SourceLocation(1, 19), scanner.next());
 		checkToken(Kind.QUESTION, scanner.next());
+	}
+
+	@Test
+	void eqWithError() throws LexicalException {
+		String input = """
+				==
+				=+
+				""";
+		IScanner scanner = CompilerComponentFactory.makeScanner(input);
+		checkToken(Kind.EQ, scanner.next());
+		assertThrows(LexicalException.class, () -> {
+			scanner.next();
+		});
+	}
+
+	//The Scanner should not backtrack so this input should throw an exception
+	@Test
+	void incompleteExchangeThrowsException() throws LexicalException {
+		String input = " <- ";
+		IScanner scanner = CompilerComponentFactory.makeScanner(input);
+		assertThrows(LexicalException.class, () -> {
+			scanner.next();
+		});
 	}
 
 	@Test
@@ -430,7 +350,83 @@ class TestScanner_starter {
 	}
 
 	@Test
-	void singleCharTokens() throws LexicalException {
+	void illegalLineTermInStringLiteral() throws LexicalException {
+		String input = """
+				"\\n"  ~ this one passes the escape sequence--it is OK
+				"\n"   ~ this on passes the LF, it is illegal.
+				""";
+		IScanner scanner = CompilerComponentFactory.makeScanner(input);
+		checkString("\"\\n\"", "\n", new SourceLocation(1, 1), scanner.next());
+		assertThrows(LexicalException.class, () -> {
+			scanner.next();
+		});
+	}
+
+	@Test
+	void identsAndReserved() throws LexicalException {
+		String input = """
+				i0
+				  i1  x ~~~2 spaces at beginning and after il
+				y Y
+				""";
+
+		IScanner scanner = CompilerComponentFactory.makeScanner(input);
+		checkToken(Kind.IDENT, "i0", new SourceLocation(1, 1), scanner.next());
+		checkToken(Kind.IDENT, "i1", new SourceLocation(2, 3), scanner.next());
+		checkToken(Kind.RES_x, "x", new SourceLocation(2, 7), scanner.next());
+		checkToken(Kind.RES_y, "y", new SourceLocation(3, 1), scanner.next());
+		checkToken(Kind.RES_Y, "Y", new SourceLocation(3, 3), scanner.next());
+		checkEOF(scanner.next());
+	}		//Fails at reg_x
+
+	//FAILING TEST CASES (4) -------------------------------------------------------------------------------------------
+	@Test
+	void lessThanGreaterThanExchange() throws LexicalException {
+		String input = """
+				<->>>>=
+				<<=<
+				""";
+		checkTokens(input, Kind.EXCHANGE, Kind.GT, Kind.GT, Kind.GE, Kind.LT, Kind.LE, Kind.LT, Kind.EOF);
+	}
+
+	@Test
+	void allReservedWords() throws LexicalException {
+		/* reserved words: image | pixel | int | string | void | nil | load | display | write | x | y | a | r | X  | Y | Z |
+          x_cart | y_cart | a_polar | r_polar | rand | sin | cos | atan  | if | while  */
+		String input = """
+				image pixel int string void nil load display write x y a r X Y Z x_cart y_cart a_polar r_polar rand sin cos atan if while
+				""";
+		IScanner scanner = CompilerComponentFactory.makeScanner(input);
+		checkToken(Kind.RES_image, scanner.next());
+		checkToken(Kind.RES_pixel, scanner.next());
+		checkToken(Kind.RES_int, scanner.next());
+		checkToken(Kind.RES_string, scanner.next());
+		checkToken(Kind.RES_void, scanner.next());
+		checkToken(Kind.RES_nil, scanner.next());
+		checkToken(Kind.RES_load, scanner.next());
+		checkToken(Kind.RES_display, scanner.next());
+		checkToken(Kind.RES_write, scanner.next());
+		checkToken(Kind.RES_x, scanner.next());
+		checkToken(Kind.RES_y, scanner.next());
+		checkToken(Kind.RES_a, scanner.next());
+		checkToken(Kind.RES_r, scanner.next());
+		checkToken(Kind.RES_X, scanner.next());
+		checkToken(Kind.RES_Y, scanner.next());
+		checkToken(Kind.RES_Z, scanner.next());
+		checkToken(Kind.RES_x_cart, scanner.next());
+		checkToken(Kind.RES_y_cart, scanner.next());
+		checkToken(Kind.RES_a_polar, scanner.next());
+		checkToken(Kind.RES_r_polar, scanner.next());
+		checkToken(Kind.RES_rand, scanner.next());
+		checkToken(Kind.RES_sin, scanner.next());
+		checkToken(Kind.RES_cos, scanner.next());
+		checkToken(Kind.RES_atan, scanner.next());
+		checkToken(Kind.RES_if, scanner.next());
+		checkToken(Kind.RES_while, scanner.next());
+	}		//ALSO fails at reg_x
+
+	@Test
+	void singleCharTokens() throws LexicalException {			//Returns EOF not numlit
 		String input = "+*00";
 		IScanner scanner = CompilerComponentFactory.makeScanner(input);
 		checkToken(Kind.PLUS, scanner.next());
@@ -458,5 +454,5 @@ class TestScanner_starter {
 		checkToken(Kind.TIMES, scanner.next());
 		checkToken(Kind.EQ, scanner.next());
 		checkToken(Kind.PLUS, scanner.next());
-	}
+	}				//FAILS with =*
 }
