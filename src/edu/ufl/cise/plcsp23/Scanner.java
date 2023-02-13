@@ -116,7 +116,7 @@ public class Scanner implements IScanner {
                             return new Token(IToken.Kind.EOF, tokenStart, 0, line, column, inputChars);
                         }
                         //whitespace -- changed to account for newlines and escape sequences below
-                        case ' ','\r','\t','\f' -> nextChar();
+                        case ' ', '\r', '\t', '\f' -> nextChar();
                         //newline
                         case '\n' -> {
                             nextChar();
@@ -235,7 +235,7 @@ public class Scanner implements IScanner {
                             } else if (isIdentStart(ch)) {
                                 state = State.IN_IDENT;
                                 nextChar();
-                            } else error("illegal char with ascii value: " + (int)ch);
+                            } else error("illegal char with ascii value: " + (int) ch);
                         }
                     }
                 }
@@ -246,8 +246,12 @@ public class Scanner implements IScanner {
                         nextChar();
                         return new Token(IToken.Kind.EQ, tokenStart, 2, line, column, inputChars);
                     } else {
-                        throw new LexicalException("Error in Equals");
+                        state = state.START;
+                        nextChar();
+                        return new Token(IToken.Kind.ASSIGN, tokenStart, 2, line, column, inputChars);
+
                     }
+
                 }
                 //inside comment and escapes when it is a \n -- Needed to pass string literals test
                 case IN_COMMENT -> {
@@ -278,23 +282,24 @@ public class Scanner implements IScanner {
                         }
                     } else {
                         state = state.START;
-                        nextChar();
                         return new Token(IToken.Kind.LT, tokenStart, 1, line, column, inputChars);
                     }
                 }
                 //>=
                 case HAVE_GT -> {
                     if (ch == '=') {
-                        state = state.START;
                         nextChar();
+                        state = state.START;
                         return new Token(IToken.Kind.GE, tokenStart, 2, line, column, inputChars);
                     } else {
+
                         state = state.START;
-                        nextChar();
+
                         return new Token(IToken.Kind.GT, tokenStart, 1, line, column, inputChars);
 
                     }
                 }
+
                 //&&
                 case HAVE_AND -> {
                     if (ch == '&') {
@@ -344,6 +349,7 @@ public class Scanner implements IScanner {
                         if (kind == null) {
                             kind = IToken.Kind.IDENT;
                         }
+
                         return new Token(kind, tokenStart, length, line, column, inputChars);
                     }
                 }
@@ -387,4 +393,3 @@ public class Scanner implements IScanner {
         }
     }
 }
-
