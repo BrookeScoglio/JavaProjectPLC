@@ -4,10 +4,26 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="7bf999a8-41a8-46be-9c36-198738bd9545" name="Changes" comment="CASES WORK: &#10;emptyProg(), onlyWhiteSpace(), numLits1(), numLitTooBig(), operators0(), illegalChar(), numLits(), singleCharTokensWithWhiteSpace(), allOperatorsAndSeparators(), eqWithError()">
+    <list default="true" id="7bf999a8-41a8-46be-9c36-198738bd9545" name="Changes" comment="ONLY 4 CASES NEED WORK:&#10;1. lessThanGreaterThanExchange()&#10;2. allReservedWords()&#10;3. singleCharTokens()&#10;4. equals()">
+      <change afterPath="$PROJECT_DIR$/src/edu/ufl/cise/plcsp23/Assignment2Test_starter.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/edu/ufl/cise/plcsp23/IParser.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/edu/ufl/cise/plcsp23/Parser.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/edu/ufl/cise/plcsp23/SyntaxException.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/edu/ufl/cise/plcsp23/ast/AST.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/edu/ufl/cise/plcsp23/ast/ASTVisitor.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/edu/ufl/cise/plcsp23/ast/BinaryExpr.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/edu/ufl/cise/plcsp23/ast/ConditionalExpr.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/edu/ufl/cise/plcsp23/ast/Expr.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/edu/ufl/cise/plcsp23/ast/IdentExpr.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/edu/ufl/cise/plcsp23/ast/NumLitExpr.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/edu/ufl/cise/plcsp23/ast/RandomExpr.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/edu/ufl/cise/plcsp23/ast/StringLitExpr.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/edu/ufl/cise/plcsp23/ast/UnaryExpr.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/edu/ufl/cise/plcsp23/ast/ZExpr.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Assignment2Test_starter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Assignment2Test_starter.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/TestScanner_starter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/TestScanner_starter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/edu/ufl/cise/plcsp23/Scanner.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/edu/ufl/cise/plcsp23/Scanner.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/edu/ufl/cise/plcsp23/CompilerComponentFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/edu/ufl/cise/plcsp23/CompilerComponentFactory.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -37,26 +53,28 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Downloaded.Files.Path.Enabled&quot;: &quot;false&quot;,
-    &quot;Repository.Attach.Annotations&quot;: &quot;false&quot;,
-    &quot;Repository.Attach.JavaDocs&quot;: &quot;false&quot;,
-    &quot;Repository.Attach.Sources&quot;: &quot;false&quot;,
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/brook/Downloads&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Downloaded.Files.Path.Enabled": "false",
+    "Repository.Attach.Annotations": "false",
+    "Repository.Attach.JavaDocs": "false",
+    "Repository.Attach.Sources": "false",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "last_opened_file_path": "C:/Users/brook/IdeaProjects/JavaProjectPLC/src/edu/ufl/cise/plcsp23",
+    "project.structure.last.edited": "Modules",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.2"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CreateClassDialog.RecentsKey">
       <recent name="edu.ufl.cise.plcsp23" />
     </key>
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\brook\IdeaProjects\JavaProjectPLC\src\edu\ufl\cise\plcsp23" />
+      <recent name="C:\Users\brook\IdeaProjects\JavaProjectPLC\src\edu\ufl\cise\plcsp23\ast" />
       <recent name="C:\Users\brook\IdeaProjects\JavaProjectPLC\src" />
     </key>
   </component>
@@ -179,7 +197,14 @@
       <option name="project" value="LOCAL" />
       <updated>1676147676735</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="ONLY 4 CASES NEED WORK:&#10;1. lessThanGreaterThanExchange()&#10;2. allReservedWords()&#10;3. singleCharTokens()&#10;4. equals()">
+      <created>1676243240915</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1676243240915</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -199,7 +224,8 @@
     <MESSAGE value="EmptyProg Now Works!!! Added StringLitToken.java and NumLitToken.java file to implement." />
     <MESSAGE value="Altered Scanner and Token files, and added the StringLitToken file." />
     <MESSAGE value="CASES WORK: &#10;emptyProg(), onlyWhiteSpace(), numLits1(), numLitTooBig(), operators0(), illegalChar(), numLits(), singleCharTokensWithWhiteSpace(), allOperatorsAndSeparators(), eqWithError()" />
-    <option name="LAST_COMMIT_MESSAGE" value="CASES WORK: &#10;emptyProg(), onlyWhiteSpace(), numLits1(), numLitTooBig(), operators0(), illegalChar(), numLits(), singleCharTokensWithWhiteSpace(), allOperatorsAndSeparators(), eqWithError()" />
+    <MESSAGE value="ONLY 4 CASES NEED WORK:&#10;1. lessThanGreaterThanExchange()&#10;2. allReservedWords()&#10;3. singleCharTokens()&#10;4. equals()" />
+    <option name="LAST_COMMIT_MESSAGE" value="ONLY 4 CASES NEED WORK:&#10;1. lessThanGreaterThanExchange()&#10;2. allReservedWords()&#10;3. singleCharTokens()&#10;4. equals()" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -211,13 +237,8 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/TestScanner_starter.java</url>
-          <line>440</line>
+          <line>393</line>
           <option name="timeStamp" value="42" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/TestScanner_starter.java</url>
-          <line>434</line>
-          <option name="timeStamp" value="52" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

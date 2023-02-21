@@ -9,5 +9,6 @@
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="junit.jupiter" level="project" />
     <orderEntry type="library" name="HW1_provided" level="project" />
+    <orderEntry type="library" name="hamcrest" level="project" />
   </component>
 </module>
