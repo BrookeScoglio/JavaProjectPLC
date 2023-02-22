@@ -16,10 +16,11 @@ import edu.ufl.cise.plcsp23.PLCException;
 
 public class BinaryExpr extends Expr {
 	
-	Expr left;
-	Kind op;
-	Expr right;
+	Expr left;	//Left Expr (any subclass: Ex numLit, ident, Binary)
+	Kind op;	//Operator that separates Expressions
+	Expr right;	//Right Expr
 
+	//Constructor passes in the left expr, op, and right expr as well as first token to create binary expr
 	public BinaryExpr(IToken firstToken, Expr left, Kind op, Expr right) {
 		super(firstToken);
 		this.left = left;
