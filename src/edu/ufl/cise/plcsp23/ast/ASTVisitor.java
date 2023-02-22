@@ -9,11 +9,10 @@
  */
 
 package edu.ufl.cise.plcsp23.ast;
-
 import edu.ufl.cise.plcsp23.PLCException;
 
-public interface ASTVisitor {
 
+public interface ASTVisitor {
 	Object visitConditionalExpr(ConditionalExpr conditionalExpr, Object arg) throws PLCException;
 
 	Object visitBinaryExpr(BinaryExpr binaryExpr, Object arg) throws PLCException;
@@ -29,5 +28,4 @@ public interface ASTVisitor {
 	Object visitZExpr(ZExpr constExpr, Object arg) throws PLCException;
 
 	Object visitRandomExpr(RandomExpr randomExpr, Object arg) throws PLCException;
-
 }

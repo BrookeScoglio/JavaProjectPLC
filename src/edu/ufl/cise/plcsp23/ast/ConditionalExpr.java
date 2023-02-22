@@ -9,7 +9,6 @@
  */
 
 package edu.ufl.cise.plcsp23.ast;
-
 import java.util.Objects;
 
 import edu.ufl.cise.plcsp23.IToken;
@@ -17,9 +16,10 @@ import edu.ufl.cise.plcsp23.PLCException;
 
 public class ConditionalExpr extends Expr {
 
-	final Expr guard;
-	final Expr trueCase;
-	final Expr falseCase;
+	//ConditionalExpr ::= if Expr ? Expr ? Expr
+	final Expr guard;		//First expr	0=false; anything else=true
+	final Expr trueCase;	//Second expr
+	final Expr falseCase;	//Third expr
 
 	public ConditionalExpr(IToken firstToken, Expr guard, Expr trueCase, Expr falseCase) {
 		super(firstToken);
@@ -66,6 +66,7 @@ public class ConditionalExpr extends Expr {
 				&& Objects.equals(trueCase, other.trueCase);
 	}
 
+	//Can modify if helpful
 	@Override
 	public String toString() {
 		return "ConditionalExpr [guard=" + guard + ", trueCase=" + trueCase + ", falseCase=" + falseCase + "]";

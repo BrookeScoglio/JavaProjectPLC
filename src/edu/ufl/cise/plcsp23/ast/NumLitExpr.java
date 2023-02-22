@@ -9,7 +9,6 @@
  */
 
 package edu.ufl.cise.plcsp23.ast;
-
 import edu.ufl.cise.plcsp23.INumLitToken;
 import edu.ufl.cise.plcsp23.IToken;
 import edu.ufl.cise.plcsp23.PLCException;
@@ -24,7 +23,8 @@ public class NumLitExpr extends Expr {
 	public Object visit(ASTVisitor v, Object arg) throws PLCException {
 		return v.visitNumLitExpr(this,arg);
 	}
-	
+
+	//Will return an int
 	public int getValue() {
 		return ((INumLitToken)firstToken).getValue();
 	}
@@ -33,6 +33,4 @@ public class NumLitExpr extends Expr {
 	public String toString() {
 		return "NumLitExpr [firstToken=" + firstToken + "]";
 	}
-
-	
 }

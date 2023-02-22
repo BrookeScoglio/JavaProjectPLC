@@ -7,9 +7,7 @@
  * 
  * This code may not be posted on a public web site either during or after the course.  
  */
-
 package edu.ufl.cise.plcsp23.ast;
-
 import java.util.Objects;
 
 import edu.ufl.cise.plcsp23.IToken;
@@ -22,8 +20,6 @@ public class BinaryExpr extends Expr {
 	Kind op;
 	Expr right;
 
-
-
 	public BinaryExpr(IToken firstToken, Expr left, Kind op, Expr right) {
 		super(firstToken);
 		this.left = left;
@@ -31,27 +27,22 @@ public class BinaryExpr extends Expr {
 		this.right = right;		
 	}
 
-
 	@Override
 	public Object visit(ASTVisitor v, Object arg) throws PLCException {
 		return v.visitBinaryExpr(this, arg);
 	}
 
-
 	public Expr getLeft() {
 		return left;
 	}
-
 
 	public Kind getOp() {
 		return op;
 	}
 
-
 	public Expr getRight() {
 		return right;
 	}
-
 
 	@Override
 	public int hashCode() {
@@ -60,7 +51,6 @@ public class BinaryExpr extends Expr {
 		result = prime * result + Objects.hash(left, op, right);
 		return result;
 	}
-
 
 	@Override
 	public boolean equals(Object obj) {
@@ -74,12 +64,8 @@ public class BinaryExpr extends Expr {
 		return Objects.equals(left, other.left) && op == other.op && Objects.equals(right, other.right);
 	}
 
-
 	@Override
 	public String toString() {
 		return "BinaryExpr [left=" + left + ", op=" + op + ", right=" + right + "]";
 	}
-	
-	
-
 }

@@ -9,23 +9,24 @@
  */
 
 package edu.ufl.cise.plcsp23.ast;
-
 import edu.ufl.cise.plcsp23.IStringLitToken;
 import edu.ufl.cise.plcsp23.IToken;
 import edu.ufl.cise.plcsp23.PLCException;
 
 public class StringLitExpr extends Expr {
 	
-	
+	//Constructor
 	public StringLitExpr(IToken firstToken) {
 		super(firstToken);
 	}
 
+	//Visit method
 	@Override
 	public Object visit(ASTVisitor v, Object arg) throws PLCException {
 		return v.visitStringLitExpr(this,arg);
 	}
-	
+
+	//Gets the token and string value -- use later to isolate your spaces from tokens
 	public String getValue() {
 		return ((IStringLitToken)firstToken).getValue();
 	}
@@ -34,7 +35,4 @@ public class StringLitExpr extends Expr {
 	public String toString() {
 		return "StringLitExpr [firstToken=" + firstToken + "]";
 	}
-	
-	
-
 }

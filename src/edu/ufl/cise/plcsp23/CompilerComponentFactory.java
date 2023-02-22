@@ -9,5 +9,4 @@ public class CompilerComponentFactory {
           //add code to create a scanner and parser and return the parser.
       return new Parser(input);
     }
-
 }
