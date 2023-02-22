@@ -100,6 +100,7 @@ public class Scanner implements IScanner {
         return isLetter(ch) || (ch == '_');
     }
 
+
     // ScanToken function returns the type of token from the string
     private Token scanToken() throws LexicalException {
         State state = State.START;
