@@ -4,10 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="7bf999a8-41a8-46be-9c36-198738bd9545" name="Changes" comment="Assignment2 Added function skeletons in Parser.java">
+    <list default="true" id="7bf999a8-41a8-46be-9c36-198738bd9545" name="Changes" comment="Added Files needed for Assignment2">
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/bluecatcode_hamcrest_1_3_extended.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/JavaProjectPLC.iml" beforeDir="false" afterPath="$PROJECT_DIR$/JavaProjectPLC.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/edu/ufl/cise/plcsp23/Assignment2Test_starter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Assignment2Test_starter.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/edu/ufl/cise/plcsp23/Parser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/edu/ufl/cise/plcsp23/Parser.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/edu/ufl/cise/plcsp23/ast/BinaryExpr.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/edu/ufl/cise/plcsp23/ast/BinaryExpr.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -26,6 +28,19 @@
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
     <option name="SET_USER_NAME_GLOBALLY" value="false" />
   </component>
+  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
+  "lastFilter": {
+    "state": "OPEN"
+  }
+}]]></component>
+  <component name="GithubPullRequestsUISettings">
+    <option name="selectedUrlAndAccountId">
+      <UrlAndAccount>
+        <option name="accountId" value="4457d6b3-5236-4727-b163-50a93d9ea62e" />
+        <option name="url" value="https://github.com/BrookeScoglio/JavaProjectPLC" />
+      </UrlAndAccount>
+    </option>
+  </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
   </component>
@@ -37,20 +52,22 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Downloaded.Files.Path.Enabled&quot;: &quot;false&quot;,
-    &quot;Repository.Attach.Annotations&quot;: &quot;false&quot;,
-    &quot;Repository.Attach.JavaDocs&quot;: &quot;false&quot;,
-    &quot;Repository.Attach.Sources&quot;: &quot;false&quot;,
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/brook/IdeaProjects/JavaProjectPLC/src/edu/ufl/cise/plcsp23&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ASKED_ADD_EXTERNAL_FILES": "true",
+    "Downloaded.Files.Path.Enabled": "false",
+    "Repository.Attach.Annotations": "false",
+    "Repository.Attach.JavaDocs": "false",
+    "Repository.Attach.Sources": "false",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "last_opened_file_path": "C:/Users/brook/IdeaProjects/JavaProjectPLC/src/edu/ufl/cise/plcsp23",
+    "project.structure.last.edited": "Modules",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.2"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CreateClassDialog.RecentsKey">
       <recent name="edu.ufl.cise.plcsp23" />
@@ -61,7 +78,16 @@
       <recent name="C:\Users\brook\IdeaProjects\JavaProjectPLC\src" />
     </key>
   </component>
-  <component name="RunManager" selected="JUnit.Assignment2Test_starter.error1">
+  <component name="RunManager" selected="JUnit.Assignment2Test_starter.numLit">
+    <configuration name="Assignment2Test_starter" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="JavaProjectPLC" />
+      <option name="PACKAGE_NAME" value="" />
+      <option name="MAIN_CLASS_NAME" value="Assignment2Test_starter" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="Assignment2Test_starter.error1" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="JavaProjectPLC" />
       <extension name="coverage">
@@ -78,11 +104,11 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="TestScanner_starter.equals" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="Assignment2Test_starter.numLit" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="JavaProjectPLC" />
       <option name="PACKAGE_NAME" value="" />
-      <option name="MAIN_CLASS_NAME" value="TestScanner_starter" />
-      <option name="METHOD_NAME" value="equals" />
+      <option name="MAIN_CLASS_NAME" value="Assignment2Test_starter" />
+      <option name="METHOD_NAME" value="numLit" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -108,23 +134,13 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="TestScanner_starter.singleCharTokens" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="JavaProjectPLC" />
-      <option name="PACKAGE_NAME" value="" />
-      <option name="MAIN_CLASS_NAME" value="TestScanner_starter" />
-      <option name="METHOD_NAME" value="singleCharTokens" />
-      <option name="TEST_OBJECT" value="method" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="JUnit.Assignment2Test_starter.numLit" />
+        <item itemvalue="JUnit.Assignment2Test_starter" />
         <item itemvalue="JUnit.Assignment2Test_starter.error1" />
         <item itemvalue="JUnit.TestScanner_starter.identsAndReserved" />
         <item itemvalue="JUnit.TestScanner_starter.illegalLineTermInStringLiteral" />
-        <item itemvalue="JUnit.TestScanner_starter.equals" />
-        <item itemvalue="JUnit.TestScanner_starter.singleCharTokens" />
       </list>
     </recent_temporary>
   </component>
@@ -200,21 +216,14 @@
       <option name="project" value="LOCAL" />
       <updated>1677016788758</updated>
     </task>
-    <task id="LOCAL-00010" summary="Assignment2 2nd commit">
-      <created>1677032379902</created>
+    <task id="LOCAL-00010" summary="Added Files needed for Assignment2">
+      <created>1677035716327</created>
       <option name="number" value="00010" />
       <option name="presentableId" value="LOCAL-00010" />
       <option name="project" value="LOCAL" />
-      <updated>1677032379902</updated>
+      <updated>1677035716327</updated>
     </task>
-    <task id="LOCAL-00011" summary="Assignment2 Added function skeletons in Parser.java">
-      <created>1677077767259</created>
-      <option name="number" value="00011" />
-      <option name="presentableId" value="LOCAL-00011" />
-      <option name="project" value="LOCAL" />
-      <updated>1677077767259</updated>
-    </task>
-    <option name="localTasksCounter" value="12" />
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -229,6 +238,7 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
+    <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
     <MESSAGE value="FIRST COMMIT" />
     <MESSAGE value="EmptyProg Works!!!" />
     <MESSAGE value="EmptyProg Now Works!!! Added StringLitToken.java and NumLitToken.java file to implement." />
@@ -236,9 +246,7 @@
     <MESSAGE value="CASES WORK: &#10;emptyProg(), onlyWhiteSpace(), numLits1(), numLitTooBig(), operators0(), illegalChar(), numLits(), singleCharTokensWithWhiteSpace(), allOperatorsAndSeparators(), eqWithError()" />
     <MESSAGE value="ONLY 4 CASES NEED WORK:&#10;1. lessThanGreaterThanExchange()&#10;2. allReservedWords()&#10;3. singleCharTokens()&#10;4. equals()" />
     <MESSAGE value="Added Files needed for Assignment2" />
-    <MESSAGE value="Assignment2 2nd commit" />
-    <MESSAGE value="Assignment2 Added function skeletons in Parser.java" />
-    <option name="LAST_COMMIT_MESSAGE" value="Assignment2 Added function skeletons in Parser.java" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added Files needed for Assignment2" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

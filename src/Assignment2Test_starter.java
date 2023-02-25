@@ -8,14 +8,16 @@
  * This code may not be posted on a public web site either during or after the course.  
  */
 
-package edu.ufl.cise.plcsp23;
-
 import static org.hamcrest.CoreMatchers.instanceOf;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import edu.ufl.cise.plcsp23.CompilerComponentFactory;
+import edu.ufl.cise.plcsp23.LexicalException;
+import edu.ufl.cise.plcsp23.PLCException;
+import edu.ufl.cise.plcsp23.SyntaxException;
 import org.junit.jupiter.api.Test;
 
 import edu.ufl.cise.plcsp23.IToken.Kind;
@@ -188,7 +190,21 @@ void unary1()
 		checkNumLit(ue.getE(),3);
 	}
 
-
+	@Test
+	void binary10() throws PLCException {
+		String input = "5  3 & 2 & 1 & 4 | 2"; // OR and BITAND [(5  (((3 & 2) & 1) & 4)) | 2]
+		BinaryExpr be0 = checkBinary(getAST(input), Kind.BITOR);
+		BinaryExpr be1 = checkBinary(be0.getLeft(), Kind.OR);
+		BinaryExpr be2 = checkBinary(be1.getRight(), Kind.BITAND);
+		BinaryExpr be3 = checkBinary(be2.getLeft(), Kind.BITAND);
+		BinaryExpr be4 = checkBinary(be3.getLeft(), Kind.BITAND);
+		checkNumLit(be1.getLeft(), 5);
+		checkNumLit(be0.getRight(), 2);
+		checkNumLit(be2.getRight(), 4);
+		checkNumLit(be3.getRight(), 1);
+		checkNumLit(be4.getRight(), 2);
+		checkNumLit(be4.getLeft(), 3);
+	}
 
 @Test
 void unary2() 

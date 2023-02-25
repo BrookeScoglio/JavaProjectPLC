@@ -24,22 +24,21 @@ public class Parser implements IParser {
     private int current;                //Holds current position
     IToken t;                           //Always holds the current token
     private final List<Token> tokens;   //List of tokens
-    private IScanner scanner;
+    Parser(List<Token> tokens){this.tokens = tokens;}
+
+private IScanner scanner;
 
     //Parser Constructor -- FIX TOKEN LIST
-    public Parser(String input){
+    public Parser(String input) {
         this.current = 0;
         IScanner scanner = CompilerComponentFactory.makeScanner(input);
 
-        Parser(List<Token> tokens) {
-            this.tokens = tokens;
-        }
     }
 
     //Function to parse AST and throws PLCException if not valid AST -- NEEDS WORK
     @Override
     public AST parse() throws PLCException {
-        t = scanner.next();
+        t = scanner.next(); // token
         return null;
     }
 
@@ -48,10 +47,24 @@ public class Parser implements IParser {
             super(message);
         }
     }
+    static void error(int line, String message) {
+        report(line, "", message);
+    }
+
+    private static void report(int line, String where,
+                               String message) {
+        System.err.println(
+                "[line " + line + "] Error" + where + ": " + message);
+
+    }
+    //< lox-error
+//> Parsing Expressions token-error
+
+
 
     //Function to help with errors in consume -- From TB needs work (IDK WHAT LOX IS)
     private ParseError error(Token token) {
-        Lox.error(token);
+        error(token);
         return new ParseError();
     }
 
@@ -92,6 +105,11 @@ public class Parser implements IParser {
         return peek().kind == IToken.Kind.EOF;
     }
 
+    private Token consume(Token kind, String message) {
+        if (check(kind)) return advance();
+        throw error(peek(), message);
+
+    }
     //Get current token we have yet to consume
     private Token peek() {
         return tokens.get(current);
@@ -112,11 +130,7 @@ public class Parser implements IParser {
     //It checks to see if the next token is of the expected kind.
     //If so, it consumes the token.
     //If some other token is there, then we’ve hit an error
-    private Token consume(Token kind, String message) {
-        if (check(kind))
-            return advance();
-        throw error(kind, message);
-    }
+
 
     //returns true if the current token is of the given kind.
     //Unlike match(), it never consumes the token, it only looks at it.
