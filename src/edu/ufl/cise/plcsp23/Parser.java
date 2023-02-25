@@ -36,7 +36,7 @@ private IScanner scanner;
     }
 
     //Function to parse AST and throws PLCException if not valid AST -- NEEDS WORK
-    @Override
+
     public AST parse() throws PLCException {
         t = scanner.next(); // token
         return null;
@@ -47,9 +47,7 @@ private IScanner scanner;
             super(message);
         }
     }
-    static void error(int line, String message) {
-        report(line, "", message);
-    }
+
 
     private static void report(int line, String where,
                                String message) {
